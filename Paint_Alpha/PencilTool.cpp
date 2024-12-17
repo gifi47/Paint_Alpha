@@ -20,33 +20,26 @@ System::Void PencilTool::OnMouseUp(System::Windows::Forms::MouseEventArgs^ e)
     points->Clear();
 }
 
-System::Void PencilTool::OnTick()
+System::Drawing::Rectangle PencilTool::OnMouseMove(System::Windows::Forms::MouseEventArgs^ e)
 {
-    
+    points->Add(e->Location);
+
     if (points->Count > 1) {
         System::Drawing::Graphics^ graphics = System::Drawing::Graphics::FromImage(Paint::layersController->ActiveLayer->bitmap);
         graphics->DrawLines(pen, points->ToArray());
-        //graphics->Draw
         int del = points->Count - 10;
         if (del > 0)
             points->RemoveRange(0, del);
         delete graphics;
     }
-
-}
-
-System::Void PencilTool::OnMouseMove(System::Windows::Forms::MouseEventArgs^ e)
-{
-    points->Add(e->Location);
+    int x = System::Math::Min(points[0].X, e->X) - Paint::thickness;
+    int y = System::Math::Min(points[0].Y, e->Y) - Paint::thickness;
+    int width = System::Math::Abs(points[0].X - e->X) + Paint::thickness * 2;
+    int height = System::Math::Abs(points[0].Y - e->Y) + Paint::thickness * 2;
+    return System::Drawing::Rectangle(x, y, width, height);
 }
 
 System::Void PencilTool::DrawPreview(System::Drawing::Graphics^ g)
 {
-    /*if (points->Count < 2) return;
-    int x = System::Math::Min(points[0].X, points[points->Count - 1].X);
-    int y = System::Math::Min(points[0].Y, points[points->Count - 1].Y);
-    int width = System::Math::Abs(points[0].X - points[points->Count - 1].X);
-    int height = System::Math::Abs(points[0].Y - points[points->Count - 1].Y);
-    g->DrawEllipse(pen, x, y, width, height);
-    */
+    return System::Void();
 }

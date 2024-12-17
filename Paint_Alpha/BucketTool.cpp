@@ -7,7 +7,7 @@ System::Void BucketTool::DrawPreview(System::Drawing::Graphics^ g)
 
 System::Void BucketTool::OnMouseDown(System::Windows::Forms::MouseEventArgs^ e)
 {
-    System::Drawing::Bitmap^ bmp = Paint::layersController->ActiveLayer->bitmap;
+    System::Drawing::Bitmap^ bmp = static_cast<System::Drawing::Bitmap^>(Paint::layersController->ActiveLayer->bitmap->Clone());
     
     if (e->X < 0 || e->X >= bmp->Width || e->Y < 0 || e->Y >= bmp->Height) return;
 
@@ -65,6 +65,9 @@ System::Void BucketTool::OnMouseDown(System::Windows::Forms::MouseEventArgs^ e)
     }
 
     bmp->UnlockBits(data);
+
+    System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(::Paint::layersController->ActiveLayer->bitmap);
+    g->DrawImage(bmp, 0, 0, bmp->Width, bmp->Height);
 }
 
 System::Void BucketTool::OnMouseUp(System::Windows::Forms::MouseEventArgs^ e)
@@ -72,12 +75,7 @@ System::Void BucketTool::OnMouseUp(System::Windows::Forms::MouseEventArgs^ e)
     return System::Void();
 }
 
-System::Void BucketTool::OnTick()
+System::Drawing::Rectangle BucketTool::OnMouseMove(System::Windows::Forms::MouseEventArgs^ e)
 {
-    return System::Void();
-}
-
-System::Void BucketTool::OnMouseMove(System::Windows::Forms::MouseEventArgs^ e)
-{
-    return System::Void();
+    return System::Drawing::Rectangle(0, 0, 1, 1);
 }

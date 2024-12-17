@@ -81,12 +81,6 @@ System::Void LayersController::MoveLayer(int id, int to)
 
 System::Void LayersController::DrawBottomLayers(System::Drawing::Graphics^ graphics)
 {
-	/*auto colorMatrix = gcnew System::Drawing::Imaging::ColorMatrix();
-	auto imageAttr = gcnew System::Drawing::Imaging::ImageAttributes();
-	colorMatrix->Matrix33 = layers[activeLayer]->opacity;
-	imageAttr->SetColorMatrix(colorMatrix, System::Drawing::Imaging::ColorMatrixFlag::Default,
-		System::Drawing::Imaging::ColorAdjustType::Bitmap);*/
-
 	System::Drawing::Rectangle rect(0, 0, bottomLayersPacked->Width, bottomLayersPacked->Height);
 	graphics->DrawImage(bottomLayersPacked, rect, 0, 0, bottomLayersPacked->Width, bottomLayersPacked->Height,
 		System::Drawing::GraphicsUnit::Pixel);
@@ -101,14 +95,14 @@ System::Void LayersController::Resize()
 	}
 }
 
+System::Void LayersController::DeleteAllLayers()
+{
+	activeLayer = 0;
+	layers->Clear();
+}
+
 System::Void LayersController::DrawTopLayers(System::Drawing::Graphics^ graphics)
 {
-	/*auto colorMatrix = gcnew System::Drawing::Imaging::ColorMatrix();
-	auto imageAttr = gcnew System::Drawing::Imaging::ImageAttributes();
-	colorMatrix->Matrix33 = layers[activeLayer]->opacity;
-	imageAttr->SetColorMatrix(colorMatrix, System::Drawing::Imaging::ColorMatrixFlag::Default,
-		System::Drawing::Imaging::ColorAdjustType::Bitmap);*/
-
 	System::Drawing::Rectangle rect(0, 0, topLayersPacked->Width, topLayersPacked->Height);
 	graphics->DrawImage(topLayersPacked, rect, 0, 0, topLayersPacked->Width, topLayersPacked->Height,
 		System::Drawing::GraphicsUnit::Pixel);

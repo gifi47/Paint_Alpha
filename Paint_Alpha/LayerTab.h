@@ -1,4 +1,5 @@
 #pragma once
+#include "FormLayerSettings.h"
 
 namespace paint {
 
@@ -33,9 +34,15 @@ namespace paint {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::TrackBar^ trackBar1;
-	private: System::Windows::Forms::Label^ label1;
+
+	protected:
+
+
 	public: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Label^ labelLayerName;
+	public:
+
+	public:
 
 	private:
 		/// <summary>
@@ -50,50 +57,39 @@ namespace paint {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
-			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
+			this->labelLayerName = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
-			// 
-			// trackBar1
-			// 
-			this->trackBar1->LargeChange = 10;
-			this->trackBar1->Location = System::Drawing::Point(365, 80);
-			this->trackBar1->Maximum = 100;
-			this->trackBar1->Name = L"trackBar1";
-			this->trackBar1->Size = System::Drawing::Size(219, 69);
-			this->trackBar1->TabIndex = 0;
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(442, 46);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(62, 20);
-			this->label1->TabIndex = 1;
-			this->label1->Text = L"Opacity";
 			// 
 			// button1
 			// 
+			this->button1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->button1->Location = System::Drawing::Point(16, 20);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(280, 110);
+			this->button1->Size = System::Drawing::Size(160, 110);
 			this->button1->TabIndex = 2;
-			this->button1->Text = L"Layer";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &LayerTab::button1_Click);
+			// 
+			// labelLayerName
+			// 
+			this->labelLayerName->AutoSize = true;
+			this->labelLayerName->Location = System::Drawing::Point(198, 65);
+			this->labelLayerName->Name = L"labelLayerName";
+			this->labelLayerName->Size = System::Drawing::Size(61, 20);
+			this->labelLayerName->TabIndex = 3;
+			this->labelLayerName->Text = L"Слой 1";
 			// 
 			// LayerTab
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->Controls->Add(this->labelLayerName);
 			this->Controls->Add(this->button1);
-			this->Controls->Add(this->label1);
-			this->Controls->Add(this->trackBar1);
 			this->Name = L"LayerTab";
-			this->Size = System::Drawing::Size(587, 152);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
+			this->Size = System::Drawing::Size(280, 150);
+			this->DoubleClick += gcnew System::EventHandler(this, &LayerTab::LayerTab_DoubleClick);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -101,13 +97,24 @@ namespace paint {
 #pragma endregion
 	public:
 		int layerId = 0;
+
 		System::Void SetName(System::String^ text) {
-			button1->Text = text;
+			labelLayerName->Text = text;
 		}
+		System::String^ GetName() {
+			return labelLayerName->Text;
+		}
+
 		event System::EventHandler^ buttonClick;
+		event System::EventHandler^ formDoubleClick;
+		
+
 	private: 
 		System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 			buttonClick(this, e);
 		}
-	};
+		System::Void LayerTab_DoubleClick(System::Object^ sender, System::EventArgs^ e) {
+			formDoubleClick(this, e);
+		}
+};
 }

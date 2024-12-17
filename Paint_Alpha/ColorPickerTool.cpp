@@ -16,12 +16,7 @@ System::Void ColorPickerTool::OnMouseUp(System::Windows::Forms::MouseEventArgs^ 
     return System::Void();
 }
 
-System::Void ColorPickerTool::OnTick()
+System::Drawing::Rectangle ColorPickerTool::OnMouseMove(System::Windows::Forms::MouseEventArgs^ e)
 {
-    return System::Void();
-}
-
-System::Void ColorPickerTool::OnMouseMove(System::Windows::Forms::MouseEventArgs^ e)
-{
-    return System::Void();
+    return System::Drawing::Rectangle(0, 0, 1, 1);
 }

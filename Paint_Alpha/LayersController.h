@@ -17,6 +17,8 @@ public:
 
 	System::Void Resize();
 
+	System::Void DeleteAllLayers();
+
 	int activeLayer = 0;
 	System::Collections::Generic::List<Layer^>^ layers = gcnew System::Collections::Generic::List<Layer^>();
 	System::Drawing::Bitmap^ topLayersPacked;

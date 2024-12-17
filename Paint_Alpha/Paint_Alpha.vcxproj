@@ -115,8 +115,10 @@
     <ClCompile Include="BucketTool.cpp" />
     <ClCompile Include="ColorController.cpp" />
     <ClCompile Include="ColorPickerTool.cpp" />
+    <ClCompile Include="EraserTool.cpp" />
     <ClCompile Include="Form1.cpp" />
     <ClCompile Include="FormCreateNew.cpp" />
+    <ClCompile Include="FormLayerSettings.cpp" />
     <ClCompile Include="FormPasteFromClipboard.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LayersController.cpp" />
@@ -139,10 +141,14 @@
     <ClInclude Include="BucketTool.h" />
     <ClInclude Include="ColorController.h" />
     <ClInclude Include="ColorPickerTool.h" />
+    <ClInclude Include="EraserTool.h" />
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="FormCreateNew.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="FormLayerSettings.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="FormPasteFromClipboard.h">
@@ -170,6 +176,10 @@
     <EmbeddedResource Include="FormCreateNew.resx">
       <DependentUpon>FormCreateNew.h</DependentUpon>
       <LogicalName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">paint.FormCreateNew.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLayerSettings.resx">
+      <DependentUpon>FormLayerSettings.h</DependentUpon>
+      <LogicalName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">paint.FormLayerSettings.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPasteFromClipboard.resx">
       <DependentUpon>FormPasteFromClipboard.h</DependentUpon>
