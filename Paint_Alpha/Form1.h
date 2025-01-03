@@ -13,6 +13,11 @@
 #include "FormCreateNew.h"
 #include "FormPasteFromClipboard.h"
 #include "FormLayerSettings.h"
+#include "SelectionTool.h"
+#include "TransformTool.h"
+#include "PaintUserSettings.h"
+#include "FormSettings.h"
+#include "Util.h"
 
 namespace paint {
 
@@ -66,7 +71,8 @@ namespace paint {
 
 	private: System::Windows::Forms::ToolStripButton^ ïå÷àòüToolStripButton;
 	private: System::Windows::Forms::ToolStripSeparator^ toolStripSeparator;
-	private: System::Windows::Forms::ToolStripButton^ âûðåçàòüToolStripButton;
+	private: System::Windows::Forms::ToolStripButton^ ToolStripButtonCut;
+
 	private: System::Windows::Forms::ToolStripButton^ ToolStripButtonCopy;
 	private: System::Windows::Forms::ToolStripButton^ ToolStripButtonPaste;
 	private: System::Windows::Forms::ToolStripSeparator^ toolStripSeparator1;
@@ -89,6 +95,9 @@ namespace paint {
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonSelection;
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonHideLayersTab;
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonResize;
+	private: System::Windows::Forms::ToolStripButton^ toolStripButtonTranslation;
+	private: System::Windows::Forms::ToolStripButton^ toolStripButtonSettings;
+
 
 
 
@@ -125,11 +134,13 @@ namespace paint {
 			this->ïå÷àòüToolStripButton = (gcnew System::Windows::Forms::ToolStripButton());
 			this->ñïðàâêàToolStripButton = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripSeparator = (gcnew System::Windows::Forms::ToolStripSeparator());
-			this->âûðåçàòüToolStripButton = (gcnew System::Windows::Forms::ToolStripButton());
+			this->toolStripButtonResize = (gcnew System::Windows::Forms::ToolStripButton());
+			this->ToolStripButtonCut = (gcnew System::Windows::Forms::ToolStripButton());
 			this->ToolStripButtonCopy = (gcnew System::Windows::Forms::ToolStripButton());
 			this->ToolStripButtonPaste = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripSeparator1 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->toolStripButtonSelection = (gcnew System::Windows::Forms::ToolStripButton());
+			this->toolStripButtonTranslation = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonPencilTool = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonBucketTool = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonRectangleTool = (gcnew System::Windows::Forms::ToolStripButton());
@@ -144,7 +155,7 @@ namespace paint {
 			this->toolStripButtonMagnifyingGlassPlus = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripTextBoxScale = (gcnew System::Windows::Forms::ToolStripTextBox());
 			this->toolStripButtonHideLayersTab = (gcnew System::Windows::Forms::ToolStripButton());
-			this->toolStripButtonResize = (gcnew System::Windows::Forms::ToolStripButton());
+			this->toolStripButtonSettings = (gcnew System::Windows::Forms::ToolStripButton());
 			this->panelMain->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pboxMain))->BeginInit();
 			this->toolStrip1->SuspendLayout();
@@ -226,36 +237,38 @@ namespace paint {
 			// buttonMoveUp
 			// 
 			this->buttonMoveUp->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
+			this->buttonMoveUp->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonMoveUp.BackgroundImage")));
+			this->buttonMoveUp->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->buttonMoveUp->Location = System::Drawing::Point(1294, 625);
 			this->buttonMoveUp->Name = L"buttonMoveUp";
 			this->buttonMoveUp->Size = System::Drawing::Size(81, 30);
 			this->buttonMoveUp->TabIndex = 8;
-			this->buttonMoveUp->Text = L"Move up";
 			this->buttonMoveUp->UseVisualStyleBackColor = true;
 			this->buttonMoveUp->Click += gcnew System::EventHandler(this, &Form1::buttonMoveUp_Click);
 			// 
 			// buttonMoveDown
 			// 
 			this->buttonMoveDown->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
+			this->buttonMoveDown->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonMoveDown.BackgroundImage")));
+			this->buttonMoveDown->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->buttonMoveDown->Location = System::Drawing::Point(1294, 656);
 			this->buttonMoveDown->Name = L"buttonMoveDown";
 			this->buttonMoveDown->Size = System::Drawing::Size(81, 30);
 			this->buttonMoveDown->TabIndex = 9;
-			this->buttonMoveDown->Text = L"Move dw";
 			this->buttonMoveDown->UseVisualStyleBackColor = true;
 			this->buttonMoveDown->Click += gcnew System::EventHandler(this, &Form1::buttonMoveDown_Click);
 			// 
 			// toolStrip1
 			// 
 			this->toolStrip1->ImageScalingSize = System::Drawing::Size(24, 24);
-			this->toolStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(26) {
+			this->toolStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(28) {
 				this->ToolStripButtonCreateNew,
 					this->toolStripButtonOpen, this->toolStripButtonSave, this->ïå÷àòüToolStripButton, this->ñïðàâêàToolStripButton, this->toolStripSeparator,
-					this->toolStripButtonResize, this->âûðåçàòüToolStripButton, this->ToolStripButtonCopy, this->ToolStripButtonPaste, this->toolStripSeparator1,
-					this->toolStripButtonSelection, this->toolStripButtonPencilTool, this->toolStripButtonBucketTool, this->toolStripButtonRectangleTool,
-					this->toolStripButtonEraserTool, this->toolStripButtonText, this->toolStripButton5, this->toolStripButtonColorPicker, this->toolStripSeparator2,
-					this->toolStripButtonCurrentColor, this->toolStripTextBoxSize, this->toolStripButtonMagnifyingGlassMinus, this->toolStripButtonMagnifyingGlassPlus,
-					this->toolStripTextBoxScale, this->toolStripButtonHideLayersTab
+					this->toolStripButtonResize, this->ToolStripButtonCut, this->ToolStripButtonCopy, this->ToolStripButtonPaste, this->toolStripSeparator1,
+					this->toolStripButtonSelection, this->toolStripButtonTranslation, this->toolStripButtonPencilTool, this->toolStripButtonBucketTool,
+					this->toolStripButtonRectangleTool, this->toolStripButtonEraserTool, this->toolStripButtonText, this->toolStripButton5, this->toolStripButtonColorPicker,
+					this->toolStripSeparator2, this->toolStripButtonCurrentColor, this->toolStripTextBoxSize, this->toolStripButtonMagnifyingGlassMinus,
+					this->toolStripButtonMagnifyingGlassPlus, this->toolStripTextBoxScale, this->toolStripButtonHideLayersTab, this->toolStripButtonSettings
 			});
 			this->toolStrip1->Location = System::Drawing::Point(0, 0);
 			this->toolStrip1->Name = L"toolStrip1";
@@ -316,14 +329,26 @@ namespace paint {
 			this->toolStripSeparator->Name = L"toolStripSeparator";
 			this->toolStripSeparator->Size = System::Drawing::Size(6, 33);
 			// 
-			// âûðåçàòüToolStripButton
+			// toolStripButtonResize
 			// 
-			this->âûðåçàòüToolStripButton->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
-			this->âûðåçàòüToolStripButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"âûðåçàòüToolStripButton.Image")));
-			this->âûðåçàòüToolStripButton->ImageTransparentColor = System::Drawing::Color::Magenta;
-			this->âûðåçàòüToolStripButton->Name = L"âûðåçàòüToolStripButton";
-			this->âûðåçàòüToolStripButton->Size = System::Drawing::Size(34, 28);
-			this->âûðåçàòüToolStripButton->Text = L"Â&ûðåçàòü";
+			this->toolStripButtonResize->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
+			this->toolStripButtonResize->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButtonResize.Image")));
+			this->toolStripButtonResize->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->toolStripButtonResize->Name = L"toolStripButtonResize";
+			this->toolStripButtonResize->Size = System::Drawing::Size(34, 28);
+			this->toolStripButtonResize->Text = L"toolStripButton1";
+			this->toolStripButtonResize->ToolTipText = L"Èçìåíèòü ðàçìåð";
+			this->toolStripButtonResize->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonResize_Click);
+			// 
+			// ToolStripButtonCut
+			// 
+			this->ToolStripButtonCut->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
+			this->ToolStripButtonCut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"ToolStripButtonCut.Image")));
+			this->ToolStripButtonCut->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->ToolStripButtonCut->Name = L"ToolStripButtonCut";
+			this->ToolStripButtonCut->Size = System::Drawing::Size(34, 28);
+			this->ToolStripButtonCut->Text = L"Â&ûðåçàòü";
+			this->ToolStripButtonCut->Click += gcnew System::EventHandler(this, &Form1::ToolStripButtonCut_Click);
 			// 
 			// ToolStripButtonCopy
 			// 
@@ -358,7 +383,19 @@ namespace paint {
 			this->toolStripButtonSelection->Name = L"toolStripButtonSelection";
 			this->toolStripButtonSelection->Size = System::Drawing::Size(34, 28);
 			this->toolStripButtonSelection->Text = L"toolStripButtonSelection";
+			this->toolStripButtonSelection->ToolTipText = L"Ïðÿìîóãîëüíîå âûäåëåíèå";
 			this->toolStripButtonSelection->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonSelection_Click);
+			// 
+			// toolStripButtonTranslation
+			// 
+			this->toolStripButtonTranslation->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
+			this->toolStripButtonTranslation->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButtonTranslation.Image")));
+			this->toolStripButtonTranslation->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->toolStripButtonTranslation->Name = L"toolStripButtonTranslation";
+			this->toolStripButtonTranslation->Size = System::Drawing::Size(34, 28);
+			this->toolStripButtonTranslation->Text = L"toolStripButton1";
+			this->toolStripButtonTranslation->ToolTipText = L"Ïåðåìåùåíèå";
+			this->toolStripButtonTranslation->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonTranslation_Click);
 			// 
 			// toolStripButtonPencilTool
 			// 
@@ -471,6 +508,7 @@ namespace paint {
 			this->toolStripButtonMagnifyingGlassMinus->Name = L"toolStripButtonMagnifyingGlassMinus";
 			this->toolStripButtonMagnifyingGlassMinus->Size = System::Drawing::Size(34, 28);
 			this->toolStripButtonMagnifyingGlassMinus->Text = L"toolStripButton1";
+			this->toolStripButtonMagnifyingGlassMinus->ToolTipText = L"Óìåíüøèòü ìàñøòàá";
 			this->toolStripButtonMagnifyingGlassMinus->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonMagnifyingGlassMinus_Click);
 			// 
 			// toolStripButtonMagnifyingGlassPlus
@@ -481,6 +519,7 @@ namespace paint {
 			this->toolStripButtonMagnifyingGlassPlus->Name = L"toolStripButtonMagnifyingGlassPlus";
 			this->toolStripButtonMagnifyingGlassPlus->Size = System::Drawing::Size(34, 28);
 			this->toolStripButtonMagnifyingGlassPlus->Text = L"toolStripButton2";
+			this->toolStripButtonMagnifyingGlassPlus->ToolTipText = L"Óâåëè÷èòü ìàñøòàá";
 			this->toolStripButtonMagnifyingGlassPlus->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonMagnifyingGlassPlus_Click);
 			// 
 			// toolStripTextBoxScale
@@ -503,16 +542,17 @@ namespace paint {
 			this->toolStripButtonHideLayersTab->ToolTipText = L"Ñêðûòü/Ïîêàçàòü ñëîè";
 			this->toolStripButtonHideLayersTab->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonHideLayersTab_Click);
 			// 
-			// toolStripButtonResize
+			// toolStripButtonSettings
 			// 
-			this->toolStripButtonResize->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
-			this->toolStripButtonResize->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButtonResize.Image")));
-			this->toolStripButtonResize->ImageTransparentColor = System::Drawing::Color::Magenta;
-			this->toolStripButtonResize->Name = L"toolStripButtonResize";
-			this->toolStripButtonResize->Size = System::Drawing::Size(34, 28);
-			this->toolStripButtonResize->Text = L"toolStripButton1";
-			this->toolStripButtonResize->ToolTipText = L"Èçìåíèòü ðàçìåð";
-			this->toolStripButtonResize->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonResize_Click);
+			this->toolStripButtonSettings->Alignment = System::Windows::Forms::ToolStripItemAlignment::Right;
+			this->toolStripButtonSettings->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
+			this->toolStripButtonSettings->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButtonSettings.Image")));
+			this->toolStripButtonSettings->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->toolStripButtonSettings->Name = L"toolStripButtonSettings";
+			this->toolStripButtonSettings->Size = System::Drawing::Size(34, 28);
+			this->toolStripButtonSettings->Text = L"toolStripButtonSettings";
+			this->toolStripButtonSettings->ToolTipText = L"Íàñòðîéêè";
+			this->toolStripButtonSettings->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonSettings_Click);
 			// 
 			// Form1
 			// 
@@ -531,6 +571,7 @@ namespace paint {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"Form1";
 			this->Text = L"Paint";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Form1::Form1_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			this->panelMain->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pboxMain))->EndInit();
@@ -552,15 +593,23 @@ namespace paint {
 		ColorPickerTool^ colorPickerTool;
 		BucketTool^ bucketTool;
 		EraserTool^ eraserTool;
+		SelectionTool^ selectionTool;
+		TransformTool^ transformTool;
 
 		bool IsToolActive = false;
+
+		bool IsSelectionActive = false;
 
 		Brush^ backFillBrush = gcnew TextureBrush(Bitmap::FromFile(L"D:\\Projects\\Paint_Alpha\\Icons\\checkboardPattern2x2.png"), Drawing2D::WrapMode::Tile);
 
 		float scale = 1.0f;
 
+		PaintUserSettings^ userSettings;
 		
 	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
+		userSettings = gcnew PaintUserSettings();
+		userSettings->Reload();
+
 		layersController = gcnew LayersController();
 		layerTabs = gcnew System::Collections::Generic::List<LayerTab^>();
 		colorController = gcnew ColorController();
@@ -575,26 +624,27 @@ namespace paint {
 		colorPickerTool->colorSelector = toolStripButtonCurrentColor;
 		bucketTool = gcnew BucketTool();
 		eraserTool = gcnew EraserTool();
+		selectionTool = gcnew SelectionTool();
+		transformTool = gcnew TransformTool();
+
 		selectedTool = pencilTool;
 
 		safe_cast<TextureBrush^>(backFillBrush)->ScaleTransform(3, 3);
 
 		panelMain->AutoScrollPosition = System::Drawing::Point(0, 0);
 		pboxMain->ClientSize = ::Paint::canvasSize;
-		pboxMain->Location = Point(pboxMain->Size.Width / 2, pboxMain->Size.Height / 2);
-		pboxMain->ClientSize += System::Drawing::Size(pboxMain->ClientSize.Width / 2, pboxMain->ClientSize.Height / 2);
-		
-		System::Drawing::Bitmap^ background = gcnew System::Drawing::Bitmap(::Paint::canvasSize.Width, ::Paint::canvasSize.Height);
-		System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(background);
-		g->FillRectangle(backFillBrush, 0, 0, background->Width, background->Height);
-		//g->Clear(System::Drawing::Color::LightGray);
+		if (userSettings->LayerOffsetOption == LayerOffset::Enabled) {
+			pboxMain->Location = Point(pboxMain->Size.Width / 2, pboxMain->Size.Height / 2);
+			pboxMain->ClientSize += System::Drawing::Size(pboxMain->ClientSize.Width / 2, pboxMain->ClientSize.Height / 2);
+		}
+		else {
+			pboxMain->Location = Point(0, 0);
+		}
 
 		toolStripButtonCurrentColor->BackColor = ::Paint::colorController->ActiveColor;
 
-		delete g;
-		pboxMain->Image = background;
-
 		buttonAdd_Click(this, e);
+		SetLayersPanelVisibility(userSettings->ShowLayersPanel);
 	}
 
 	private: System::Void panelMain_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
@@ -611,7 +661,7 @@ namespace paint {
 			gcnew System::Windows::Forms::MouseEventArgs(e->Button, e->Clicks, (e->X - pboxMain->Location.X) / scale,
 				(e->Y - pboxMain->Location.Y) / scale, e->Delta);
 		selectedTool->OnMouseUp(r);
-		pboxMain->Invalidate();
+		pboxMain->Invalidate(GetVisibleCanvasRect());
 	}
 	private: System::Void pboxMain_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 		IsToolActive = true;
@@ -628,7 +678,7 @@ namespace paint {
 				e->Y / scale, e->Delta);
 		selectedTool->OnMouseUp(r);
 
-		pboxMain->Invalidate();
+		pboxMain->Invalidate(GetVisibleCanvasRect());
 	}
 	private: System::Void pboxMain_MouseMove(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 		if (IsToolActive) {
@@ -663,14 +713,39 @@ namespace paint {
 		}
 	}
 
+	System::Drawing::Rectangle GetVisibleCanvasRect() {
+		System::Drawing::Rectangle rect(0, 0, ::Paint::canvasSize.Width * scale, ::Paint::canvasSize.Height * scale);
+		if (pboxMain->Location.X < 0) rect.X = -pboxMain->Location.X;
+		if (pboxMain->Location.Y < 0) rect.Y = -pboxMain->Location.Y;
+		if (rect.Width > panelMain->ClientSize.Width)
+		{
+			if (-pboxMain->Location.X + panelMain->ClientSize.Width > rect.Width) 
+				rect.Width = rect.Width + pboxMain->Location.X;
+			else 
+				rect.Width = panelMain->ClientSize.Width;
+		}
+		if (rect.Height > panelMain->ClientSize.Height)
+		{
+			if (-pboxMain->Location.Y + panelMain->ClientSize.Height > rect.Height)
+				rect.Height = rect.Height + pboxMain->Location.Y;
+			else
+				rect.Height = panelMain->ClientSize.Height;
+		}
+		return rect;
+	}
+
+	System::Void FillBackground(System::Drawing::Graphics^ graphics) {
+		graphics->FillRectangle(backFillBrush, GetVisibleCanvasRect());
+	}
+
 	private: System::Void pboxMain_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-		//e->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
-		
-		//logger->Log(e->ClipRectangle.ToString());
+		FillBackground(e->Graphics);
+
 		if (scale < 1.0f)
 			e->Graphics->InterpolationMode = System::Drawing::Drawing2D::InterpolationMode::HighQualityBicubic;
 		else
 			e->Graphics->InterpolationMode = System::Drawing::Drawing2D::InterpolationMode::NearestNeighbor;
+
 		e->Graphics->CompositingQuality = System::Drawing::Drawing2D::CompositingQuality::HighSpeed;
 		e->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
 		e->Graphics->ScaleTransform(scale, scale);
@@ -679,21 +754,22 @@ namespace paint {
 		
 		if (IsToolActive) {
 			selectedTool->DrawPreview(e->Graphics);
-		
 		}
 		layersController->DrawTopLayers(e->Graphics);
-	}
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-		auto openFileDialog = gcnew System::Windows::Forms::OpenFileDialog();
-		if (openFileDialog->ShowDialog() != System::Windows::Forms::DialogResult::OK) {
-			return;
+
+		/*if (IsSelectionActive) {
+			e->Graphics->ResetTransform();
+			selectionTool->DrawGizmo(e->Graphics, scale);
+			//e->Graphics->CompositingMode = System::Drawing::Drawing2D::CompositingMode::SourceCopy;
+			//e->Graphics->FillEllipse(gcnew System::Drawing::SolidBrush(Color::Red));
+		}*/
+
+		if (::Paint::selectionRegion != nullptr) {
+			e->Graphics->ResetTransform();
+			e->Graphics->FillRegion(gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(128, System::Drawing::Color::AliceBlue)), ::Paint::selectionRegion);
+			Rectangle bounds = Rectangle::Truncate(::Paint::selectionRegion->GetBounds(e->Graphics));
+			e->Graphics->DrawRectangle(selectionTool->pen, bounds.Left * scale, bounds.Top * scale, bounds.Width * scale, bounds.Height * scale);
 		}
-		if (!System::IO::File::Exists(openFileDialog->FileName)) {
-			return;
-		}
-		System::Drawing::Bitmap^ overlapImg = gcnew System::Drawing::Bitmap(openFileDialog->FileName);
-		layersController->layers[layersController->activeLayer]->bitmap = overlapImg;
-		layersController->layers[layersController->activeLayer]->opacity = 1.0f;
 	}
 	System::Void buttonLayer_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
@@ -787,8 +863,6 @@ namespace paint {
 	private: System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (::Paint::layersController->layers->Count < 2) return;
 		int layerId = layersController->activeLayer;
-		//auto oldPos = panelLayers->AutoScrollPosition;
-		//panelLayers->AutoScrollPosition = System::Drawing::Point(0, 0);
 
 		layersController->DeleteLayer(layerId);
 		layersController->SelectLayer(layerId - (layerId != 0));
@@ -824,12 +898,7 @@ namespace paint {
 		layerTabs->Add(layerTab);
 	}
 
-	private: System::Void buttonToolPencil_Click(System::Object^ sender, System::EventArgs^ e) {
-		selectedTool = pencilTool;
-	}
-	private: System::Void buttonToolRectangle_Click(System::Object^ sender, System::EventArgs^ e) {
-		selectedTool = rectangleTool;
-	}
+
 	private: System::Void textBoxThickness_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		int result = 1;
 		try {
@@ -848,6 +917,12 @@ namespace paint {
 		}
 		toolStripButtonCurrentColor->BackColor = ::Paint::colorController->ActiveColor;
 	}
+	private: System::Void buttonToolPencil_Click(System::Object^ sender, System::EventArgs^ e) {
+		selectedTool = pencilTool;
+	}
+	private: System::Void buttonToolRectangle_Click(System::Object^ sender, System::EventArgs^ e) {
+		selectedTool = rectangleTool;
+	}
 	private: System::Void toolStripButtonColorPicker_Click(System::Object^ sender, System::EventArgs^ e) {
 		selectedTool = colorPickerTool;
 		toolStripButtonCurrentColor->BackColor = ::Paint::colorController->ActiveColor;
@@ -860,6 +935,16 @@ namespace paint {
 	}
 	private: System::Void toolStripButtonBucketTool_Click(System::Object^ sender, System::EventArgs^ e) {
 		selectedTool = bucketTool;
+	}
+	private: System::Void toolStripButtonSelection_Click(System::Object^ sender, System::EventArgs^ e) {
+		IsSelectionActive = !IsSelectionActive;
+		selectedTool = selectionTool;
+	}
+	private: System::Void toolStripButton4_Click(System::Object^ sender, System::EventArgs^ e) {
+		selectedTool = eraserTool;
+	}
+	private: System::Void toolStripButtonTranslation_Click(System::Object^ sender, System::EventArgs^ e) {
+		selectedTool = transformTool;
 	}
 	private: System::Void toolStripButtonMagnifyingGlassMinus_Click(System::Object^ sender, System::EventArgs^ e) {
 		scale -= 0.1f;
@@ -875,29 +960,22 @@ namespace paint {
 	}
 
 	private: void UpdateScale() {
-		
 		float percentX = (panelMain->AutoScrollPosition.X * -1.0) / panelMain->ClientSize.Width;
 		float percentY = (panelMain->AutoScrollPosition.Y * -1.0) / panelMain->ClientSize.Height;
 
 		panelMain->AutoScrollPosition = System::Drawing::Point(0, 0);
 
 		pboxMain->ClientSize = System::Drawing::Size(::Paint::canvasSize.Width * scale, ::Paint::canvasSize.Height * scale);
-		pboxMain->Location = Point(pboxMain->Size.Width / 2, pboxMain->Size.Height / 2);
-		pboxMain->ClientSize += System::Drawing::Size(pboxMain->ClientSize.Width / 2, pboxMain->ClientSize.Height / 2);
-
-		System::Drawing::Bitmap^ background = 
-			gcnew System::Drawing::Bitmap(::Paint::canvasSize.Width * scale, ::Paint::canvasSize.Height * scale);
-		System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(background);
-		//g->Clear(System::Drawing::Color::LightGray);
-		g->FillRectangle(backFillBrush, 0, 0, background->Width, background->Height);
+		if (userSettings->LayerOffsetOption == LayerOffset::Enabled) {
+			pboxMain->Location = Point(pboxMain->Size.Width / 2, pboxMain->Size.Height / 2);
+			pboxMain->ClientSize += System::Drawing::Size(pboxMain->ClientSize.Width / 2, pboxMain->ClientSize.Height / 2);
+		}
+		else {
+			pboxMain->Location = Point(0, 0);
+		}
 
 		toolStripButtonCurrentColor->BackColor = ::Paint::colorController->ActiveColor;
-
-		delete g;
-		pboxMain->Image = background;
-
 		panelMain->AutoScrollPosition = System::Drawing::Point(panelMain->ClientSize.Width * percentX, panelMain->ClientSize.Height * percentY);
-		//panelMain->Invalidate();
 	}
 	private: System::Void ToolStripButtonCreateNew_Click(System::Object^ sender, System::EventArgs^ e) {
 		FormCreateNew^ form = gcnew FormCreateNew(::Paint::canvasSize.Width, ::Paint::canvasSize.Height);
@@ -913,18 +991,15 @@ namespace paint {
 
 		panelMain->AutoScrollPosition = System::Drawing::Point(0, 0);
 		pboxMain->ClientSize = ::Paint::canvasSize;
-		pboxMain->Location = Point(pboxMain->Size.Width / 2, pboxMain->Size.Height / 2);
-		pboxMain->ClientSize += System::Drawing::Size(pboxMain->ClientSize.Width / 2, pboxMain->ClientSize.Height / 2);
-
-		System::Drawing::Bitmap^ background = gcnew System::Drawing::Bitmap(::Paint::canvasSize.Width, ::Paint::canvasSize.Height);
-		System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(background);
-		//g->Clear(System::Drawing::Color::LightGray);
-		g->FillRectangle(backFillBrush, 0, 0, background->Width, background->Height);
+		if (userSettings->LayerOffsetOption == LayerOffset::Enabled) {
+			pboxMain->Location = Point(pboxMain->Size.Width / 2, pboxMain->Size.Height / 2);
+			pboxMain->ClientSize += System::Drawing::Size(pboxMain->ClientSize.Width / 2, pboxMain->ClientSize.Height / 2);
+		}
+		else {
+			pboxMain->Location = Point(0, 0);
+		}
 
 		toolStripButtonCurrentColor->BackColor = ::Paint::colorController->ActiveColor;
-
-		delete g;
-		pboxMain->Image = background;
 	}
 
 	void ResizeCanvas(System::Drawing::Size newSize) {
@@ -957,12 +1032,43 @@ namespace paint {
 		{
 			clipboardImage = Clipboard::GetImage();
 		}
+		else if (Clipboard::ContainsFileDropList()) // COPY FROM FILE EXPLORER
+		{
+			auto fileList = Clipboard::GetFileDropList();
+
+			if (fileList->Count > 0)
+			{
+				String^ filePath = fileList[0];
+
+				String^ extension = System::IO::Path::GetExtension(filePath)->ToLower();
+				if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" ||
+					extension == ".bmp" || extension == ".gif")
+				{
+					try
+					{
+						clipboardImage = Image::FromFile(filePath);
+					}
+					catch (Exception^ ex)
+					{
+						MessageBox::Show("Îøèáêà çàãðóçêè èçîáðàæåíèÿ", "Îøèáêà", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					}
+				}
+				else
+				{
+					MessageBox::Show("Ôîðìàò çàãðóæàåìîãî ôàéëà íå ïîääåðæèâàåòñÿ", "Îøèáêà", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			else
+			{
+				MessageBox::Show("Â áóôåðå îáìåíà îòñóòñòâóåò èçîáðàæåíèå", "Îøèáêà", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+		}
 		else
 		{
 			MessageBox::Show("Â áóôåðå îáìåíà îòñóòñòâóåò èçîáðàæåíèå", "Îøèáêà", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			return;
 		}
-		AddImage(clipboardImage, true);
+		AddImage(clipboardImage, userSettings->PasteOption == PasteMode::ToNewLayer);
 		
 	}
 	System::Void AddImage(System::Drawing::Image^ image, bool createLayer) {
@@ -977,58 +1083,56 @@ namespace paint {
 		{
 			// this adds new layer
 			buttonAdd_Click(this, gcnew System::EventArgs);
+			::Paint::layersController->SelectLayer(::Paint::layersController->layers->Count - 1);
 		}
-		::Paint::layersController->SelectLayer(::Paint::layersController->layers->Count - 1);
 		Graphics^ g = Graphics::FromImage(::Paint::layersController->ActiveLayer->bitmap);
 		g->DrawImage(image, 0, 0, image->Width, image->Height);
 		delete g;
 	}
 	private: System::Void ToolStripButtonCopy_Click(System::Object^ sender, System::EventArgs^ e) {
-		
-		DataObject^ dataObject = gcnew DataObject();
-
-		System::IO::MemoryStream^ pngStream = gcnew System::IO::MemoryStream();
-		pngStream->Position = 0;
-		::Paint::layersController->ActiveLayer->bitmap->Save(pngStream, System::Drawing::Imaging::ImageFormat::Png);
-
-		dataObject->SetData("PNG", false, pngStream);
-
-		Bitmap^ dibBitmap = gcnew Bitmap(::Paint::layersController->ActiveLayer->bitmap->Width,
-			::Paint::layersController->ActiveLayer->bitmap->Height, System::Drawing::Imaging::PixelFormat::Format32bppRgb);
-		Graphics^ g = Graphics::FromImage(dibBitmap);
-		g->Clear(Color::Black); // Default background color
-		g->DrawImage(::Paint::layersController->ActiveLayer->bitmap, 0, 0);
-		delete g;
-
-		dataObject->SetData(DataFormats::Dib, true, dibBitmap);
-
-		Clipboard::SetDataObject(dataObject, true);
-	}
-	private: System::Void toolStripButtonSelection_Click(System::Object^ sender, System::EventArgs^ e) {
-	
-	}
-	private: System::Void toolStripButtonHideLayersTab_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (panelLayers->Visible) {
-			panelLayers->Visible = false;
-			buttonAdd->Visible = false;
-			buttonDelete->Visible = false;
-			buttonMerge->Visible = false;
-			buttonMoveUp->Visible = false;
-			buttonMoveDown->Visible = false;
-			panelMain->Size = System::Drawing::Size(panelMain->Size.Width + panelLayers->Width, panelMain->Size.Height);
+		if (::Paint::selectionRegion == nullptr)
+		{
+			Util::CopyToClipboard(::Paint::layersController->ActiveLayer->bitmap);
 		}
-		else {
+		else 
+		{
+			System::Drawing::Rectangle bounds =
+				System::Drawing::Rectangle::Truncate(::Paint::selectionRegion->GetBounds(
+					System::Drawing::Graphics::FromImage(::Paint::layersController->ActiveLayer->bitmap)));
+
+			System::Drawing::Bitmap^ selectionBitmap = gcnew System::Drawing::Bitmap(bounds.Width, bounds.Height);
+
+			Graphics^ g = Graphics::FromImage(selectionBitmap);
+			g->DrawImage(::Paint::layersController->ActiveLayer->bitmap, -bounds.X, -bounds.Y);
+			delete g;
+
+			Util::CopyToClipboard(selectionBitmap);
+		}
+	}
+	
+	private: System::Void toolStripButtonHideLayersTab_Click(System::Object^ sender, System::EventArgs^ e) {
+		userSettings->ShowLayersPanel = !userSettings->ShowLayersPanel;
+		SetLayersPanelVisibility(userSettings->ShowLayersPanel);
+	}
+	System::Void SetLayersPanelVisibility(bool value) {
+		if (value) {
+			if (!panelLayers->Visible) panelMain->Size = System::Drawing::Size(panelMain->Size.Width - panelLayers->Width, panelMain->Size.Height);
 			panelLayers->Visible = true;
 			buttonAdd->Visible = true;
 			buttonDelete->Visible = true;
 			buttonMerge->Visible = true;
 			buttonMoveUp->Visible = true;
 			buttonMoveDown->Visible = true;
-			panelMain->Size = System::Drawing::Size(panelMain->Size.Width - panelLayers->Width, panelMain->Size.Height);
 		}
-	}
-	private: System::Void toolStripButton4_Click(System::Object^ sender, System::EventArgs^ e) {
-		selectedTool = eraserTool;
+		else {
+			if (panelLayers->Visible) panelMain->Size = System::Drawing::Size(panelMain->Size.Width + panelLayers->Width, panelMain->Size.Height);
+			panelLayers->Visible = false;
+			buttonAdd->Visible = false;
+			buttonDelete->Visible = false;
+			buttonMerge->Visible = false;
+			buttonMoveUp->Visible = false;
+			buttonMoveDown->Visible = false;
+		}
 	}
 
 	private: System::Void toolStripButtonSave_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -1075,6 +1179,66 @@ namespace paint {
 		form->Text = L"Ðàçìåð èçîáðàæåíèÿ";
 		if (form->ShowDialog() != Windows::Forms::DialogResult::OK) return;
 		ResizeImage(form->SizeOfNewImage);
+	}
+	private: System::Void ToolStripButtonCut_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (::Paint::selectionRegion == nullptr) return;
+		System::Drawing::Rectangle bounds = 
+			System::Drawing::Rectangle::Truncate(::Paint::selectionRegion->GetBounds(
+				System::Drawing::Graphics::FromImage(::Paint::layersController->ActiveLayer->bitmap)));
+
+		System::Drawing::Bitmap^ selectionBitmap = gcnew System::Drawing::Bitmap(bounds.Width, bounds.Height);
+		
+		Graphics^ g = Graphics::FromImage(selectionBitmap);
+		g->DrawImage(::Paint::layersController->ActiveLayer->bitmap, -bounds.X, -bounds.Y);
+		delete g;
+
+		Util::CopyToClipboard(selectionBitmap);
+
+		System::Drawing::Graphics^ activeLayerG = System::Drawing::Graphics::FromImage(::Paint::layersController->ActiveLayer->bitmap);
+		activeLayerG->CompositingMode = System::Drawing::Drawing2D::CompositingMode::SourceCopy;
+		activeLayerG->FillRegion(gcnew System::Drawing::SolidBrush(System::Drawing::Color::Transparent), ::Paint::selectionRegion);
+		delete activeLayerG;
+		pboxMain->Invalidate(::Paint::selectionRegion);
+	}
+
+	protected: virtual bool ProcessCmdKey(Message% msg, Keys keyData) override
+	{
+		if (keyData == (Keys::Control | Keys::S)) // Ctrl + S
+		{
+			toolStripButtonSave_Click(toolStripButtonSave, gcnew System::EventArgs());
+			return true; // Indicate the key press was handled
+		}
+		else if (keyData == (Keys::Control | Keys::O)) // Ctrl + O
+		{
+			toolStripButtonOpen_Click(toolStripButtonOpen, gcnew System::EventArgs());
+			return true;
+		}
+		else if (keyData == (Keys::Control | Keys::V)) // Ctrl + V
+		{
+			ToolStripButtonPaste_Click(ToolStripButtonPaste, gcnew System::EventArgs());
+			return true;
+		}
+		else if (keyData == (Keys::Control | Keys::C)) // Ctrl + C
+		{
+			ToolStripButtonCopy_Click(ToolStripButtonCopy, gcnew System::EventArgs());
+			return true;
+		}
+		else if (keyData == (Keys::Control | Keys::X))
+		{
+			ToolStripButtonCut_Click(ToolStripButtonCut, gcnew System::EventArgs());
+			return true;
+		}
+		return Form::ProcessCmdKey(msg, keyData);
+	}
+	private: System::Void toolStripButtonSettings_Click(System::Object^ sender, System::EventArgs^ e) {
+		userSettings->Save();
+		FormSettings^ form = gcnew FormSettings();
+		form->ShowDialog();
+		userSettings->Reload();
+		SetLayersPanelVisibility(userSettings->ShowLayersPanel);
+	}
+	private: System::Void Form1_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
+		userSettings->Save();
 	}
 };
 }

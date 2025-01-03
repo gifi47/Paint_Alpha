@@ -120,14 +120,19 @@
     <ClCompile Include="FormCreateNew.cpp" />
     <ClCompile Include="FormLayerSettings.cpp" />
     <ClCompile Include="FormPasteFromClipboard.cpp" />
+    <ClCompile Include="FormSettings.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LayersController.cpp" />
     <ClCompile Include="LayerTab.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Paint.cpp" />
+    <ClCompile Include="PaintUserSettings.cpp" />
     <ClCompile Include="PencilTool.cpp" />
     <ClCompile Include="RectangleTool.cpp" />
+    <ClCompile Include="SelectionTool.cpp" />
     <ClCompile Include="Tool.cpp" />
+    <ClCompile Include="TransformTool.cpp" />
+    <ClCompile Include="Util.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +159,9 @@
     <ClInclude Include="FormPasteFromClipboard.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="FormSettings.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LayersController.h" />
     <ClInclude Include="LayerTab.h">
@@ -161,9 +169,13 @@
     </ClInclude>
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Paint.h" />
+    <ClInclude Include="PaintUserSettings.h" />
     <ClInclude Include="PencilTool.h" />
     <ClInclude Include="RectangleTool.h" />
+    <ClInclude Include="SelectionTool.h" />
     <ClInclude Include="Tool.h" />
+    <ClInclude Include="TransformTool.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
@@ -183,6 +195,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPasteFromClipboard.resx">
       <DependentUpon>FormPasteFromClipboard.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettings.resx">
+      <DependentUpon>FormSettings.h</DependentUpon>
+      <LogicalName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">paint.FormSettings.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="LayerTab.resx">
       <DependentUpon>LayerTab.h</DependentUpon>

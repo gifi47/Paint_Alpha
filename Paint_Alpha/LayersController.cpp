@@ -91,7 +91,7 @@ System::Void LayersController::Resize()
 	topLayersPacked = gcnew System::Drawing::Bitmap(topLayersPacked, Paint::canvasSize);
 	bottomLayersPacked = gcnew System::Drawing::Bitmap(topLayersPacked, Paint::canvasSize);
 	for each (Layer^ layer in layers) {
-		layer->Resize();
+		layer->Resize(AnchorImageMode::Strech);
 	}
 }
 
