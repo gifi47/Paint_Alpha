@@ -98,6 +98,8 @@ namespace paint {
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonTranslation;
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonSettings;
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonApplySelection;
+	private: System::Windows::Forms::HScrollBar^ hScrollBar1;
+	private: System::Windows::Forms::VScrollBar^ vScrollBar1;
 
 
 
@@ -143,6 +145,7 @@ namespace paint {
 			this->toolStripSeparator1 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->toolStripButtonSelection = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonTranslation = (gcnew System::Windows::Forms::ToolStripButton());
+			this->toolStripButtonApplySelection = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonPencilTool = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonBucketTool = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonRectangleTool = (gcnew System::Windows::Forms::ToolStripButton());
@@ -158,7 +161,8 @@ namespace paint {
 			this->toolStripTextBoxScale = (gcnew System::Windows::Forms::ToolStripTextBox());
 			this->toolStripButtonHideLayersTab = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonSettings = (gcnew System::Windows::Forms::ToolStripButton());
-			this->toolStripButtonApplySelection = (gcnew System::Windows::Forms::ToolStripButton());
+			this->hScrollBar1 = (gcnew System::Windows::Forms::HScrollBar());
+			this->vScrollBar1 = (gcnew System::Windows::Forms::VScrollBar());
 			this->panelMain->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pboxMain))->BeginInit();
 			this->toolStrip1->SuspendLayout();
@@ -169,7 +173,8 @@ namespace paint {
 			this->panelMain->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->panelMain->AutoScroll = true;
+			this->panelMain->Controls->Add(this->vScrollBar1);
+			this->panelMain->Controls->Add(this->hScrollBar1);
 			this->panelMain->Controls->Add(this->pboxMain);
 			this->panelMain->Location = System::Drawing::Point(0, 36);
 			this->panelMain->Name = L"panelMain";
@@ -183,7 +188,7 @@ namespace paint {
 			// 
 			this->pboxMain->Location = System::Drawing::Point(3, 3);
 			this->pboxMain->Name = L"pboxMain";
-			this->pboxMain->Size = System::Drawing::Size(754, 562);
+			this->pboxMain->Size = System::Drawing::Size(1042, 620);
 			this->pboxMain->TabIndex = 0;
 			this->pboxMain->TabStop = false;
 			this->pboxMain->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::pboxMain_Paint);
@@ -401,6 +406,17 @@ namespace paint {
 			this->toolStripButtonTranslation->ToolTipText = L"Перемещение";
 			this->toolStripButtonTranslation->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonTranslation_Click);
 			// 
+			// toolStripButtonApplySelection
+			// 
+			this->toolStripButtonApplySelection->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
+			this->toolStripButtonApplySelection->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButtonApplySelection.Image")));
+			this->toolStripButtonApplySelection->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->toolStripButtonApplySelection->Name = L"toolStripButtonApplySelection";
+			this->toolStripButtonApplySelection->Size = System::Drawing::Size(34, 28);
+			this->toolStripButtonApplySelection->Text = L"toolStripButtonApplySelection";
+			this->toolStripButtonApplySelection->ToolTipText = L"Применить и снять выделение";
+			this->toolStripButtonApplySelection->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonApplySelection_Click);
+			// 
 			// toolStripButtonPencilTool
 			// 
 			this->toolStripButtonPencilTool->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
@@ -558,16 +574,19 @@ namespace paint {
 			this->toolStripButtonSettings->ToolTipText = L"Настройки";
 			this->toolStripButtonSettings->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonSettings_Click);
 			// 
-			// toolStripButtonApplySelection
+			// hScrollBar1
 			// 
-			this->toolStripButtonApplySelection->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
-			this->toolStripButtonApplySelection->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButtonApplySelection.Image")));
-			this->toolStripButtonApplySelection->ImageTransparentColor = System::Drawing::Color::Magenta;
-			this->toolStripButtonApplySelection->Name = L"toolStripButtonApplySelection";
-			this->toolStripButtonApplySelection->Size = System::Drawing::Size(34, 28);
-			this->toolStripButtonApplySelection->Text = L"toolStripButtonApplySelection";
-			this->toolStripButtonApplySelection->ToolTipText = L"Применить и снять выделение";
-			this->toolStripButtonApplySelection->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonApplySelection_Click);
+			this->hScrollBar1->Location = System::Drawing::Point(3, 623);
+			this->hScrollBar1->Name = L"hScrollBar1";
+			this->hScrollBar1->Size = System::Drawing::Size(1042, 26);
+			this->hScrollBar1->TabIndex = 1;
+			// 
+			// vScrollBar1
+			// 
+			this->vScrollBar1->Location = System::Drawing::Point(1045, 3);
+			this->vScrollBar1->Name = L"vScrollBar1";
+			this->vScrollBar1->Size = System::Drawing::Size(26, 620);
+			this->vScrollBar1->TabIndex = 2;
 			// 
 			// Form1
 			// 
@@ -618,6 +637,9 @@ namespace paint {
 		float scale = 1.0f;
 
 		PaintUserSettings^ userSettings;
+
+		int currentX = 0;
+		int currentY = 0;
 		
 	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
 		userSettings = gcnew PaintUserSettings();
