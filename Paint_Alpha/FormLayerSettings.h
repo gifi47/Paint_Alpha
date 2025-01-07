@@ -160,7 +160,10 @@ namespace paint {
 			this->Controls->Add(this->buttonOK);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->textBox1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"FormLayerSettings";
 			this->Text = L"Параметры слоя";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBarOpacity))->EndInit();

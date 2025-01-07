@@ -191,7 +191,10 @@ namespace paint {
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->checkBoxShowLayersPanel);
 			this->Controls->Add(this->groupBoxPaste);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"FormSettings";
 			this->Text = L"Настройки";
 			this->Load += gcnew System::EventHandler(this, &FormSettings::FormSettings_Load);

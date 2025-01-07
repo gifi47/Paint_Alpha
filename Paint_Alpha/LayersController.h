@@ -1,5 +1,6 @@
 #pragma once
 ref class Layer;
+enum class AnchorImageMode;
 
 ref class LayersController
 {
@@ -16,8 +17,13 @@ public:
 	System::Void DrawBottomLayers(System::Drawing::Graphics^ graphics);
 
 	System::Void Resize();
+	System::Void Resize(AnchorImageMode resizeMode);
 
 	System::Void DeleteAllLayers();
+
+	System::Void PackLayers();
+	System::Void PackBottomLayers();
+	System::Void PackTopLayers();
 
 	int activeLayer = 0;
 	System::Collections::Generic::List<Layer^>^ layers = gcnew System::Collections::Generic::List<Layer^>();

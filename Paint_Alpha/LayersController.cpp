@@ -12,36 +12,7 @@ System::Void LayersController::SelectLayer(int id) {
 	if (id < 0 || id > layers->Count) return;
 	activeLayer = id;
 
-	auto colorMatrix = gcnew System::Drawing::Imaging::ColorMatrix();
-	auto imageAttr = gcnew System::Drawing::Imaging::ImageAttributes();
-
-	System::Drawing::Graphics^ bottomGraphics = System::Drawing::Graphics::FromImage(bottomLayersPacked);
-	bottomGraphics->Clear(System::Drawing::Color::Transparent);
-	for (int i = 0; i < id; i++) {
-		colorMatrix->Matrix33 = layers[i]->opacity;
-
-		imageAttr->SetColorMatrix(colorMatrix, System::Drawing::Imaging::ColorMatrixFlag::Default, System::Drawing::Imaging::ColorAdjustType::Bitmap);
-
-		System::Drawing::Rectangle rect(0, 0, layers[i]->bitmap->Width, layers[i]->bitmap->Height);
-		bottomGraphics->DrawImage(layers[i]->bitmap, rect, 0, 0, layers[i]->bitmap->Width, layers[i]->bitmap->Height,
-			System::Drawing::GraphicsUnit::Pixel, imageAttr);
-	}
-
-	delete bottomGraphics;
-
-	System::Drawing::Graphics^ topGraphics = System::Drawing::Graphics::FromImage(topLayersPacked);
-	topGraphics->Clear(System::Drawing::Color::Transparent);
-	for (int i = id + 1; i < layers->Count; i++) {
-		colorMatrix->Matrix33 = layers[i]->opacity;
-
-		imageAttr->SetColorMatrix(colorMatrix, System::Drawing::Imaging::ColorMatrixFlag::Default, System::Drawing::Imaging::ColorAdjustType::Bitmap);
-
-		System::Drawing::Rectangle rect(0, 0, layers[i]->bitmap->Width, layers[i]->bitmap->Height);
-		topGraphics->DrawImage(layers[i]->bitmap, rect, 0, 0, layers[i]->bitmap->Width, layers[i]->bitmap->Height,
-			System::Drawing::GraphicsUnit::Pixel, imageAttr);
-	}
-
-	delete topGraphics;
+	PackLayers();
 }
 
 System::Void LayersController::AddLayer()
@@ -88,17 +59,69 @@ System::Void LayersController::DrawBottomLayers(System::Drawing::Graphics^ graph
 
 System::Void LayersController::Resize()
 {
+	Resize(AnchorImageMode::Strech);
+}
+
+System::Void LayersController::Resize(AnchorImageMode resizeMode)
+{
 	topLayersPacked = gcnew System::Drawing::Bitmap(topLayersPacked, Paint::canvasSize);
 	bottomLayersPacked = gcnew System::Drawing::Bitmap(topLayersPacked, Paint::canvasSize);
-	for each (Layer^ layer in layers) {
-		layer->Resize(AnchorImageMode::Strech);
+	for each (Layer ^ layer in layers) {
+		layer->Resize(resizeMode);
 	}
+	PackLayers();
 }
 
 System::Void LayersController::DeleteAllLayers()
 {
 	activeLayer = 0;
 	layers->Clear();
+}
+
+System::Void LayersController::PackLayers()
+{
+	PackBottomLayers();
+	PackTopLayers();
+}
+
+System::Void LayersController::PackBottomLayers()
+{
+	auto colorMatrix = gcnew System::Drawing::Imaging::ColorMatrix();
+	auto imageAttr = gcnew System::Drawing::Imaging::ImageAttributes();
+
+	System::Drawing::Graphics^ bottomGraphics = System::Drawing::Graphics::FromImage(bottomLayersPacked);
+	bottomGraphics->Clear(System::Drawing::Color::Transparent);
+	for (int i = 0; i < activeLayer; i++) {
+		colorMatrix->Matrix33 = layers[i]->opacity;
+
+		imageAttr->SetColorMatrix(colorMatrix, System::Drawing::Imaging::ColorMatrixFlag::Default, System::Drawing::Imaging::ColorAdjustType::Bitmap);
+
+		System::Drawing::Rectangle rect(0, 0, layers[i]->bitmap->Width, layers[i]->bitmap->Height);
+		bottomGraphics->DrawImage(layers[i]->bitmap, rect, 0, 0, layers[i]->bitmap->Width, layers[i]->bitmap->Height,
+			System::Drawing::GraphicsUnit::Pixel, imageAttr);
+	}
+
+	delete bottomGraphics;
+}
+
+System::Void LayersController::PackTopLayers()
+{
+	auto colorMatrix = gcnew System::Drawing::Imaging::ColorMatrix();
+	auto imageAttr = gcnew System::Drawing::Imaging::ImageAttributes();
+
+	System::Drawing::Graphics^ topGraphics = System::Drawing::Graphics::FromImage(topLayersPacked);
+	topGraphics->Clear(System::Drawing::Color::Transparent);
+	for (int i = activeLayer + 1; i < layers->Count; i++) {
+		colorMatrix->Matrix33 = layers[i]->opacity;
+
+		imageAttr->SetColorMatrix(colorMatrix, System::Drawing::Imaging::ColorMatrixFlag::Default, System::Drawing::Imaging::ColorAdjustType::Bitmap);
+
+		System::Drawing::Rectangle rect(0, 0, layers[i]->bitmap->Width, layers[i]->bitmap->Height);
+		topGraphics->DrawImage(layers[i]->bitmap, rect, 0, 0, layers[i]->bitmap->Width, layers[i]->bitmap->Height,
+			System::Drawing::GraphicsUnit::Pixel, imageAttr);
+	}
+
+	delete topGraphics;
 }
 
 System::Void LayersController::DrawTopLayers(System::Drawing::Graphics^ graphics)

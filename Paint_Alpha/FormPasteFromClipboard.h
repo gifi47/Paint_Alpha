@@ -113,6 +113,9 @@ namespace paint {
 			this->Controls->Add(this->buttonKeepSize);
 			this->Controls->Add(this->buttonCancel);
 			this->Controls->Add(this->buttonIncreaseSize);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"FormPasteFromClipboard";
 			this->Text = L"Вставка";
 			this->ResumeLayout(false);
