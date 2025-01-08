@@ -41,5 +41,5 @@ System::Void RectangleTool::DrawPreview(System::Drawing::Graphics^ g)
     int y = System::Math::Min(pointStart.Y, temporaryPoint.Y);
     int width = System::Math::Abs(pointStart.X - temporaryPoint.X);
     int height = System::Math::Abs(pointStart.Y - temporaryPoint.Y);
-    g->DrawRectangle(pen, x, y, width, height);
+    g->DrawRectangle(pen, (x - ::Paint::currentX) * ::Paint::scale, (y - ::Paint::currentY) * ::Paint::scale, width * ::Paint::scale, height * ::Paint::scale);
 }

@@ -21,3 +21,13 @@ System::Void Util::CopyToClipboard(System::Drawing::Image^ sourceImage)
 
 	System::Windows::Forms::Clipboard::SetDataObject(dataObject, true);
 }
+
+float Util::ScrollScale(float scale, float delta, float scrollCf)
+{
+	if (delta < 0) {
+		return scale * delta * scrollCf;
+	}
+	else {
+		return scale * 0.45f * delta * scrollCf;
+	}
+}

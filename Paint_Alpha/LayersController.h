@@ -16,6 +16,10 @@ public:
 	System::Void DrawSelectedLayer(System::Drawing::Graphics^ graphics);
 	System::Void DrawBottomLayers(System::Drawing::Graphics^ graphics);
 
+	System::Void DrawTopLayers(System::Drawing::Graphics^ graphics, System::Drawing::Rectangle^ destRect, System::Drawing::Rectangle^ imageRect);
+	System::Void DrawSelectedLayer(System::Drawing::Graphics^ graphics, System::Drawing::Rectangle^ destRect, System::Drawing::Rectangle^ imageRect);
+	System::Void DrawBottomLayers(System::Drawing::Graphics^ graphics, System::Drawing::Rectangle^ destRect, System::Drawing::Rectangle^ imageRect);
+
 	System::Void Resize();
 	System::Void Resize(AnchorImageMode resizeMode);
 

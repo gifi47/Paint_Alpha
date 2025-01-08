@@ -73,11 +73,8 @@ System::Void TransformTool::DrawPreview(System::Drawing::Graphics^ g)
             System::Drawing::Rectangle::Truncate(::Paint::selectionRegion->GetBounds(
                 System::Drawing::Graphics::FromImage(::Paint::layersController->ActiveLayer->bitmap)));
 
-        auto state = g->Save();
-        g->SetClip(::Paint::selectionRegion, System::Drawing::Drawing2D::CombineMode::Intersect);
-        //g->CompositingMode = System::Drawing::Drawing2D::CompositingMode::SourceCopy;
-        g->DrawImage(selectionBitmap, bounds.Left, bounds.Top, selectionBitmap->Width, selectionBitmap->Height);
-        g->Restore(state);
+        
+        g->DrawImage(selectionBitmap, (bounds.Left - ::Paint::currentX) * ::Paint::scale, (bounds.Top - ::Paint::currentY) * ::Paint::scale, selectionBitmap->Width * ::Paint::scale, selectionBitmap->Height * ::Paint::scale);
     }
 }
 

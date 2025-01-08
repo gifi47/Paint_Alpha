@@ -57,6 +57,29 @@ System::Void LayersController::DrawBottomLayers(System::Drawing::Graphics^ graph
 		System::Drawing::GraphicsUnit::Pixel);
 }
 
+System::Void LayersController::DrawTopLayers(System::Drawing::Graphics^ graphics, System::Drawing::Rectangle^ destRect, System::Drawing::Rectangle^ imageRect)
+{
+	graphics->DrawImage(topLayersPacked, *destRect, imageRect->X, imageRect->Y, imageRect->Width, imageRect->Height,
+		System::Drawing::GraphicsUnit::Pixel);
+}
+
+System::Void LayersController::DrawBottomLayers(System::Drawing::Graphics^ graphics, System::Drawing::Rectangle^ destRect, System::Drawing::Rectangle^ imageRect)
+{
+	graphics->DrawImage(bottomLayersPacked, *destRect, imageRect->X, imageRect->Y, imageRect->Width, imageRect->Height,
+		System::Drawing::GraphicsUnit::Pixel);
+}
+
+System::Void LayersController::DrawSelectedLayer(System::Drawing::Graphics^ graphics, System::Drawing::Rectangle^ destRect, System::Drawing::Rectangle^ imageRect)
+{
+	auto colorMatrix = gcnew System::Drawing::Imaging::ColorMatrix();
+	auto imageAttr = gcnew System::Drawing::Imaging::ImageAttributes();
+	colorMatrix->Matrix33 = layers[activeLayer]->opacity;
+	imageAttr->SetColorMatrix(colorMatrix, System::Drawing::Imaging::ColorMatrixFlag::Default,
+		System::Drawing::Imaging::ColorAdjustType::Bitmap);
+	graphics->DrawImage(layers[activeLayer]->bitmap, *destRect, imageRect->X, imageRect->Y, imageRect->Width, imageRect->Height,
+		System::Drawing::GraphicsUnit::Pixel, imageAttr);
+}
+
 System::Void LayersController::Resize()
 {
 	Resize(AnchorImageMode::Strech);

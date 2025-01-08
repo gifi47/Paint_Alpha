@@ -98,8 +98,10 @@ namespace paint {
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonTranslation;
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonSettings;
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonApplySelection;
-	private: System::Windows::Forms::HScrollBar^ hScrollBar1;
-	private: System::Windows::Forms::VScrollBar^ vScrollBar1;
+	private: System::Windows::Forms::HScrollBar^ ScrollBarX;
+
+	private: System::Windows::Forms::VScrollBar^ ScrollBarY;
+
 
 
 
@@ -124,6 +126,8 @@ namespace paint {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Form1::typeid));
 			this->panelMain = (gcnew System::Windows::Forms::Panel());
+			this->ScrollBarY = (gcnew System::Windows::Forms::VScrollBar());
+			this->ScrollBarX = (gcnew System::Windows::Forms::HScrollBar());
 			this->pboxMain = (gcnew System::Windows::Forms::PictureBox());
 			this->panelLayers = (gcnew System::Windows::Forms::Panel());
 			this->buttonAdd = (gcnew System::Windows::Forms::Button());
@@ -161,8 +165,6 @@ namespace paint {
 			this->toolStripTextBoxScale = (gcnew System::Windows::Forms::ToolStripTextBox());
 			this->toolStripButtonHideLayersTab = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonSettings = (gcnew System::Windows::Forms::ToolStripButton());
-			this->hScrollBar1 = (gcnew System::Windows::Forms::HScrollBar());
-			this->vScrollBar1 = (gcnew System::Windows::Forms::VScrollBar());
 			this->panelMain->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pboxMain))->BeginInit();
 			this->toolStrip1->SuspendLayout();
@@ -173,19 +175,39 @@ namespace paint {
 			this->panelMain->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->panelMain->Controls->Add(this->vScrollBar1);
-			this->panelMain->Controls->Add(this->hScrollBar1);
+			this->panelMain->Controls->Add(this->ScrollBarY);
+			this->panelMain->Controls->Add(this->ScrollBarX);
 			this->panelMain->Controls->Add(this->pboxMain);
 			this->panelMain->Location = System::Drawing::Point(0, 36);
 			this->panelMain->Name = L"panelMain";
 			this->panelMain->Size = System::Drawing::Size(1072, 650);
 			this->panelMain->TabIndex = 0;
-			this->panelMain->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &Form1::panelMain_MouseDown);
-			this->panelMain->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &Form1::panelMain_MouseMove);
-			this->panelMain->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &Form1::panelMain_MouseUp);
+			// 
+			// ScrollBarY
+			// 
+			this->ScrollBarY->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->ScrollBarY->Location = System::Drawing::Point(1045, 3);
+			this->ScrollBarY->Name = L"ScrollBarY";
+			this->ScrollBarY->Size = System::Drawing::Size(26, 620);
+			this->ScrollBarY->TabIndex = 2;
+			this->ScrollBarY->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &Form1::ScrollBarY_Scroll);
+			// 
+			// ScrollBarX
+			// 
+			this->ScrollBarX->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->ScrollBarX->Location = System::Drawing::Point(3, 623);
+			this->ScrollBarX->Name = L"ScrollBarX";
+			this->ScrollBarX->Size = System::Drawing::Size(1042, 26);
+			this->ScrollBarX->TabIndex = 1;
+			this->ScrollBarX->Scroll += gcnew System::Windows::Forms::ScrollEventHandler(this, &Form1::ScrollBarX_Scroll);
 			// 
 			// pboxMain
 			// 
+			this->pboxMain->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->pboxMain->Location = System::Drawing::Point(3, 3);
 			this->pboxMain->Name = L"pboxMain";
 			this->pboxMain->Size = System::Drawing::Size(1042, 620);
@@ -574,20 +596,6 @@ namespace paint {
 			this->toolStripButtonSettings->ToolTipText = L"Настройки";
 			this->toolStripButtonSettings->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonSettings_Click);
 			// 
-			// hScrollBar1
-			// 
-			this->hScrollBar1->Location = System::Drawing::Point(3, 623);
-			this->hScrollBar1->Name = L"hScrollBar1";
-			this->hScrollBar1->Size = System::Drawing::Size(1042, 26);
-			this->hScrollBar1->TabIndex = 1;
-			// 
-			// vScrollBar1
-			// 
-			this->vScrollBar1->Location = System::Drawing::Point(1045, 3);
-			this->vScrollBar1->Name = L"vScrollBar1";
-			this->vScrollBar1->Size = System::Drawing::Size(26, 620);
-			this->vScrollBar1->TabIndex = 2;
-			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
@@ -607,6 +615,7 @@ namespace paint {
 			this->Text = L"Paint";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Form1::Form1_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
+			this->SizeChanged += gcnew System::EventHandler(this, &Form1::Form1_SizeChanged);
 			this->panelMain->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pboxMain))->EndInit();
 			this->toolStrip1->ResumeLayout(false);
@@ -634,12 +643,10 @@ namespace paint {
 
 		Brush^ backFillBrush = gcnew TextureBrush(Bitmap::FromFile(L"D:\\Projects\\Paint_Alpha\\Icons\\checkboardPattern2x2.png"), Drawing2D::WrapMode::Tile);
 
-		float scale = 1.0f;
-
 		PaintUserSettings^ userSettings;
 
-		int currentX = 0;
-		int currentY = 0;
+		System::Drawing::Rectangle^ drawingRect = gcnew Rectangle();
+		System::Drawing::Rectangle^ imageRect = gcnew Rectangle();
 		
 	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
 		userSettings = gcnew PaintUserSettings();
@@ -676,145 +683,112 @@ namespace paint {
 
 		safe_cast<TextureBrush^>(backFillBrush)->ScaleTransform(3, 3);
 
-		panelMain->AutoScrollPosition = System::Drawing::Point(0, 0);
-		pboxMain->ClientSize = ::Paint::canvasSize;
-		if (userSettings->LayerOffsetOption == LayerOffset::Enabled) {
-			pboxMain->Location = Point(pboxMain->Size.Width / 2, pboxMain->Size.Height / 2);
-			pboxMain->ClientSize += System::Drawing::Size(pboxMain->ClientSize.Width / 2, pboxMain->ClientSize.Height / 2);
-		}
-		else {
-			pboxMain->Location = Point(0, 0);
-		}
-
 		toolStripButtonCurrentColor->BackColor = ::Paint::colorController->ActiveColor;
 
 		buttonAdd_Click(this, e);
 		SetLayersPanelVisibility(userSettings->ShowLayersPanel);
+
+		pboxMain->MouseWheel += gcnew System::Windows::Forms::MouseEventHandler(this, &paint::Form1::Panel_MouseWheel);
+
+
+		RecalculateRectangles();
+	}
+	private: System::Void RecalculateRectangles() {
+		imageRect->X = ::Paint::currentX;
+		imageRect->Y = ::Paint::currentY;
+		imageRect->Width = Math::Min(::Paint::canvasSize.Width - ::Paint::currentX, (int)(pboxMain->Width / ::Paint::scale));
+		imageRect->Height = Math::Min(::Paint::canvasSize.Height - ::Paint::currentY, (int)(pboxMain->Height / ::Paint::scale));
+
+		drawingRect->X = 0;
+		drawingRect->Y = 0;
+		drawingRect->Width = Math::Min((int)((::Paint::canvasSize.Width - ::Paint::currentX) * ::Paint::scale), pboxMain->Width);
+		drawingRect->Height = Math::Min((int)((::Paint::canvasSize.Height - ::Paint::currentY) * ::Paint::scale), pboxMain->Height);
+
+		double aspectRatio = static_cast<double>(imageRect->Width) / imageRect->Height;
+
+		int destWidth = drawingRect->Width;
+		int destHeight = drawingRect->Height;
+
+		// Adjust drawingRect to maintain the aspect ratio
+		if (static_cast<double>(destWidth) / destHeight < aspectRatio) {
+			destWidth = static_cast<int>(destHeight * aspectRatio);
+		}
+		else {
+			destHeight = static_cast<int>(destWidth / aspectRatio);
+		}
+		drawingRect->Width = destWidth;
+		drawingRect->Height = destHeight;
 	}
 
-	private: System::Void panelMain_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-		IsToolActive = true;
-		System::Windows::Forms::MouseEventArgs^ r = 
-			gcnew System::Windows::Forms::MouseEventArgs(e->Button, e->Clicks, Math::Floor((e->X - pboxMain->Location.X) / scale), 
-				Math::Floor((e->Y - pboxMain->Location.Y) / scale), e->Delta);
-
-		selectedTool->OnMouseDown(r);
-	}
-	private: System::Void panelMain_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-		IsToolActive = false;
-		System::Windows::Forms::MouseEventArgs^ r =
-			gcnew System::Windows::Forms::MouseEventArgs(e->Button, e->Clicks, Math::Floor((e->X - pboxMain->Location.X) / scale),
-				Math::Floor((e->Y - pboxMain->Location.Y) / scale), e->Delta);
-		selectedTool->OnMouseUp(r);
-		pboxMain->Invalidate(GetVisibleCanvasRect());
-	}
 	private: System::Void pboxMain_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 		IsToolActive = true;
 		System::Windows::Forms::MouseEventArgs^ r =
-			gcnew System::Windows::Forms::MouseEventArgs(e->Button, e->Clicks, Math::Floor(e->X / scale),
-				Math::Floor(e->Y / scale), e->Delta);
+			gcnew System::Windows::Forms::MouseEventArgs(e->Button, e->Clicks, Math::Floor(e->X / ::Paint::scale) + ::Paint::currentX,
+				Math::Floor(e->Y / ::Paint::scale) + ::Paint::currentY, e->Delta);
 
 		selectedTool->OnMouseDown(r);
 	}
 	private: System::Void pboxMain_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 		IsToolActive = false;
 		System::Windows::Forms::MouseEventArgs^ r =
-			gcnew System::Windows::Forms::MouseEventArgs(e->Button, e->Clicks, Math::Floor(e->X / scale),
-				Math::Floor(e->Y / scale), e->Delta);
+			gcnew System::Windows::Forms::MouseEventArgs(e->Button, e->Clicks, Math::Floor(e->X / ::Paint::scale) + ::Paint::currentX,
+				Math::Floor(e->Y / ::Paint::scale) + ::Paint::currentY, e->Delta);
 		selectedTool->OnMouseUp(r);
 
-		pboxMain->Invalidate(GetVisibleCanvasRect());
+		pboxMain->Invalidate();
 	}
 	private: System::Void pboxMain_MouseMove(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 		if (IsToolActive) {
-			this->Text = (e->X / scale).ToString("F2") + " " + (e->Y / scale).ToString("F2");
+			//this->Text = ((e->X) / ::Paint::scale).ToString("F2") + " " + (e->Y / ::Paint::scale).ToString("F2");
 			//this->Text = (e->X).ToString("F2") + " " + (e->Y ).ToString("F2");
 			System::Windows::Forms::MouseEventArgs^ r =
-				gcnew System::Windows::Forms::MouseEventArgs(e->Button, e->Clicks, Math::Floor(e->X / scale),
-					Math::Floor(e->Y / scale), e->Delta);
+				gcnew System::Windows::Forms::MouseEventArgs(e->Button, e->Clicks, Math::Floor(e->X / ::Paint::scale) + ::Paint::currentX,
+					Math::Floor(e->Y / ::Paint::scale) + ::Paint::currentY, e->Delta);
 			System::Drawing::Rectangle updateRect = selectedTool->OnMouseMove(r);
-			if (scale >= 1.0f) {
-				updateRect.Width *= scale;
-				updateRect.Height *= scale;
-				updateRect.X *= scale;
-				updateRect.Y *= scale;
+			/*if (::Paint::scale >= 1.0f) {
+				updateRect.Width *= ::Paint::scale;
+				updateRect.Height *= ::Paint::scale;
+				updateRect.X *= ::Paint::scale;
+				updateRect.Y *= ::Paint::scale;
 				pboxMain->Invalidate(updateRect);
 			}
-			else pboxMain->Invalidate();
+			else pboxMain->Invalidate();*/
+			pboxMain->Invalidate();
 		}
-	}
-	private: System::Void panelMain_MouseMove(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-		if (IsToolActive) {
-			System::Windows::Forms::MouseEventArgs^ r =
-				gcnew System::Windows::Forms::MouseEventArgs(e->Button, e->Clicks, Math::Floor((e->X - pboxMain->Location.X) / scale),
-					Math::Floor((e->Y - pboxMain->Location.Y) / scale), e->Delta);
-			System::Drawing::Rectangle updateRect = selectedTool->OnMouseMove(r);
-			if (scale >= 1.0f) {
-				updateRect.Width *= scale;
-				updateRect.Height *= scale;
-				updateRect.X *= scale;
-				updateRect.Y *= scale;
-				pboxMain->Invalidate(updateRect);
-			}
-			else pboxMain->Invalidate();
-		}
-	}
-
-	System::Drawing::Rectangle GetVisibleCanvasRect() {
-		System::Drawing::Rectangle rect(0, 0, ::Paint::canvasSize.Width * scale, ::Paint::canvasSize.Height * scale);
-		if (pboxMain->Location.X < 0) rect.X = -pboxMain->Location.X;
-		if (pboxMain->Location.Y < 0) rect.Y = -pboxMain->Location.Y;
-		if (rect.Width > panelMain->ClientSize.Width)
-		{
-			if (-pboxMain->Location.X + panelMain->ClientSize.Width > rect.Width) 
-				rect.Width = rect.Width + pboxMain->Location.X;
-			else 
-				rect.Width = panelMain->ClientSize.Width;
-		}
-		if (rect.Height > panelMain->ClientSize.Height)
-		{
-			if (-pboxMain->Location.Y + panelMain->ClientSize.Height > rect.Height)
-				rect.Height = rect.Height + pboxMain->Location.Y;
-			else
-				rect.Height = panelMain->ClientSize.Height;
-		}
-		return rect;
 	}
 
 	System::Void FillBackground(System::Drawing::Graphics^ graphics) {
-		graphics->FillRectangle(backFillBrush, GetVisibleCanvasRect());
+		graphics->FillRectangle(backFillBrush, System::Drawing::Rectangle(-Math::Min(0, ::Paint::currentX), -Math::Min(0, ::Paint::currentY),
+			Math::Min((int)((::Paint::canvasSize.Width - Math::Max(::Paint::currentX, 0)) * ::Paint::scale), pboxMain->Width),
+			Math::Min((int)((::Paint::canvasSize.Height - Math::Max(::Paint::currentY, 0)) * ::Paint::scale), pboxMain->Height)));
 	}
 
 	private: System::Void pboxMain_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 		FillBackground(e->Graphics);
 
-		if (scale < 1.0f)
+		if (::Paint::scale < 1.0f)
 			e->Graphics->InterpolationMode = System::Drawing::Drawing2D::InterpolationMode::HighQualityBicubic;
 		else
 			e->Graphics->InterpolationMode = System::Drawing::Drawing2D::InterpolationMode::NearestNeighbor;
 
 		e->Graphics->CompositingQuality = System::Drawing::Drawing2D::CompositingQuality::HighSpeed;
 		e->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
-		e->Graphics->ScaleTransform(scale, scale);
 		e->Graphics->PixelOffsetMode = System::Drawing::Drawing2D::PixelOffsetMode::HighQuality;
-		layersController->DrawBottomLayers(e->Graphics);
-		layersController->DrawSelectedLayer(e->Graphics);
+
+		layersController->DrawBottomLayers(e->Graphics, drawingRect, imageRect);
+		layersController->DrawSelectedLayer(e->Graphics, drawingRect, imageRect);
 		
 		if (IsToolActive) {
-			if (selectedTool == selectionTool)
-				selectionTool->DrawGizmo(e->Graphics, scale);
-			else
-				selectedTool->DrawPreview(e->Graphics);
+			selectedTool->DrawPreview(e->Graphics);
 		}
 		if (transformTool->IsActive) {
 			transformTool->DrawPreview(e->Graphics);
 		}
-		layersController->DrawTopLayers(e->Graphics);
+		layersController->DrawTopLayers(e->Graphics, drawingRect, imageRect);
 
 		if (::Paint::IsSelectionActive) {
-			e->Graphics->ResetTransform();
 			Rectangle bounds = Rectangle::Truncate(::Paint::selectionRegion->GetBounds(e->Graphics));
-			e->Graphics->DrawRectangle(selectionTool->pen, bounds.Left * scale, bounds.Top * scale, bounds.Width * scale, bounds.Height * scale);
+			e->Graphics->DrawRectangle(selectionTool->pen, (bounds.Left - ::Paint::currentX) * ::Paint::scale, (bounds.Top - ::Paint::currentY) * ::Paint::scale, bounds.Width * ::Paint::scale, bounds.Height * ::Paint::scale);
 		}
 	}
 	System::Void buttonLayer_Click(System::Object^ sender, System::EventArgs^ e) 
@@ -825,7 +799,6 @@ namespace paint {
 		int layerId = layerTab->layerId;
 		::Paint::layersController->SelectLayer(layerId);
 		layerTab->button1->BackgroundImage = layersController->layers[layerId]->bitmap;
-
 	}
 	System::Void formLayerDoubleClick(System::Object^ sender, System::EventArgs^ e) {
 		LayerTab^ layerTab = static_cast<LayerTab^>(sender);
@@ -839,7 +812,6 @@ namespace paint {
 		else if (layerId > ::Paint::layersController->activeLayer) ::Paint::layersController->PackTopLayers();
 		pboxMain->Invalidate();
 	}
-
 	private: System::Void buttonAdd_Click(System::Object^ sender, System::EventArgs^ e) {
 		panelLayers->AutoScrollPosition = System::Drawing::Point(0, 0);
 		int layerId = layersController->layers->Count;
@@ -856,7 +828,6 @@ namespace paint {
 		layerTabs[::Paint::layersController->activeLayer]->BackColor = System::Drawing::SystemColors::ActiveCaption;
 		return;
 	}
-
 	private: System::Void buttonMoveUp_Click(System::Object^ sender, System::EventArgs^ e) {
 		int layerId = layersController->activeLayer;
 		if (layerId + 1 == layersController->layers->Count) return;
@@ -934,7 +905,6 @@ namespace paint {
 		layerTabs[::Paint::layersController->activeLayer]->BackColor = System::Drawing::SystemColors::ActiveCaption;
 		pboxMain->Invalidate();
 	}
-
 	System::Void ClearAllLayers() {
 		panelLayers->AutoScrollPosition = System::Drawing::Point(0, 0);
 		panelLayers->Controls->Clear();
@@ -954,7 +924,6 @@ namespace paint {
 		layerTabs[::Paint::layersController->activeLayer]->BackColor = System::Drawing::SystemColors::ActiveCaption;
 	}
 
-
 	private: System::Void textBoxThickness_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		int result = 1;
 		try {
@@ -965,7 +934,6 @@ namespace paint {
 		}
 		::Paint::thickness = result;
 	}
-
 	private: System::Void toolStripButtonCurrentColor_Click(System::Object^ sender, System::EventArgs^ e) {
 		System::Windows::Forms::ColorDialog^ cd = gcnew System::Windows::Forms::ColorDialog();
 		if (cd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
@@ -996,35 +964,22 @@ namespace paint {
 		ChangeTool(transformTool);
 	}
 	private: System::Void toolStripButtonMagnifyingGlassMinus_Click(System::Object^ sender, System::EventArgs^ e) {
-		scale -= 0.1f;
-		if (scale <= 0.1f) scale = 0.1f;
-		toolStripTextBoxScale->Text = scale.ToString("F1");
+		::Paint::scale -= 0.1f;
+		if (::Paint::scale <= 0.1f) ::Paint::scale = 0.1f;
 		UpdateScale();
+		RecalculateRectangles();
 	}
 	private: System::Void toolStripButtonMagnifyingGlassPlus_Click(System::Object^ sender, System::EventArgs^ e) {
-		scale += 0.1f;
-		if (scale > 16.0f) scale = 16.0f;
-		toolStripTextBoxScale->Text = scale.ToString("F1");
+		::Paint::scale += 0.1f;
+		if (::Paint::scale > 128.0f) ::Paint::scale = 128.0f;
 		UpdateScale();
+		RecalculateRectangles();
 	}
 
 	private: void UpdateScale() {
-		float percentX = (panelMain->AutoScrollPosition.X * -1.0) / panelMain->ClientSize.Width;
-		float percentY = (panelMain->AutoScrollPosition.Y * -1.0) / panelMain->ClientSize.Height;
-
-		panelMain->AutoScrollPosition = System::Drawing::Point(0, 0);
-
-		pboxMain->ClientSize = System::Drawing::Size(::Paint::canvasSize.Width * scale, ::Paint::canvasSize.Height * scale);
-		if (userSettings->LayerOffsetOption == LayerOffset::Enabled) {
-			pboxMain->Location = Point(pboxMain->Size.Width / 2, pboxMain->Size.Height / 2);
-			pboxMain->ClientSize += System::Drawing::Size(pboxMain->ClientSize.Width / 2, pboxMain->ClientSize.Height / 2);
-		}
-		else {
-			pboxMain->Location = Point(0, 0);
-		}
-
-		toolStripButtonCurrentColor->BackColor = ::Paint::colorController->ActiveColor;
-		panelMain->AutoScrollPosition = System::Drawing::Point(panelMain->ClientSize.Width * percentX, panelMain->ClientSize.Height * percentY);
+		ScrollBarX->Maximum = ::Paint::canvasSize.Width;// *::Paint::scale;
+		ScrollBarY->Maximum = ::Paint::canvasSize.Height;// *::Paint::scale;
+		toolStripTextBoxScale->Text = ::Paint::scale.ToString("F1");
 	}
 	private: System::Void ToolStripButtonCreateNew_Click(System::Object^ sender, System::EventArgs^ e) {
 		FormCreateNew^ form = gcnew FormCreateNew(::Paint::canvasSize.Width, ::Paint::canvasSize.Height);
@@ -1037,48 +992,29 @@ namespace paint {
 	void ResizeImage(System::Drawing::Size newSize) {
 		::Paint::canvasSize = newSize;
 		::Paint::layersController->Resize();
-
-		panelMain->AutoScrollPosition = System::Drawing::Point(0, 0);
-		pboxMain->ClientSize = ::Paint::canvasSize;
-		if (userSettings->LayerOffsetOption == LayerOffset::Enabled) {
-			pboxMain->Location = Point(pboxMain->Size.Width / 2, pboxMain->Size.Height / 2);
-			pboxMain->ClientSize += System::Drawing::Size(pboxMain->ClientSize.Width / 2, pboxMain->ClientSize.Height / 2);
-		}
-		else {
-			pboxMain->Location = Point(0, 0);
-		}
-
+		RecalculateRectangles();
 		toolStripButtonCurrentColor->BackColor = ::Paint::colorController->ActiveColor;
 	}
 
 	void ResizeCanvas(System::Drawing::Size newSize) {
 		::Paint::canvasSize = newSize;
 		::Paint::layersController->Resize(AnchorImageMode::TopLeft);
-
-		panelMain->AutoScrollPosition = System::Drawing::Point(0, 0);
-		pboxMain->ClientSize = ::Paint::canvasSize;
-		if (userSettings->LayerOffsetOption == LayerOffset::Enabled) {
-			pboxMain->Location = Point(pboxMain->Size.Width / 2, pboxMain->Size.Height / 2);
-			pboxMain->ClientSize += System::Drawing::Size(pboxMain->ClientSize.Width / 2, pboxMain->ClientSize.Height / 2);
-		}
-		else {
-			pboxMain->Location = Point(0, 0);
-		}
-
+		RecalculateRectangles();
 		toolStripButtonCurrentColor->BackColor = ::Paint::colorController->ActiveColor;
 	}
 	private: System::Void toolStripTextBoxScale_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-		float result = scale;
+		float result = ::Paint::scale;
 		try {
 			result = System::Convert::ToSingle(((System::Windows::Forms::ToolStripTextBox^)sender)->Text);
 		}
 		catch (...) {
-			result = scale;
+			result = ::Paint::scale;
 		}
-		if (scale != result) {
+		if (::Paint::scale != result) {
 			if (result >= 0.1f && result <= 128.0f) {
-				scale = result;
+				::Paint::scale = result;
 				UpdateScale();
+				RecalculateRectangles();
 			}
 		}
 	}
@@ -1130,8 +1066,6 @@ namespace paint {
 			MessageBox::Show("В буфере обмена отсутствует изображение", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			return;
 		}
-		//AddImage(clipboardImage, userSettings->PasteOption == PasteMode::ToNewLayer);
-		//selectedTool = transformTool;
 		PasteImage(clipboardImage, userSettings->PasteOption == PasteMode::ToNewLayer);
 	}
 	System::Void PasteImage(System::Drawing::Image^ image, bool createLayer) {
@@ -1191,15 +1125,18 @@ namespace paint {
 
 			Util::CopyToClipboard(selectionBitmap);
 		}
-	}
-	
+	}	
 	private: System::Void toolStripButtonHideLayersTab_Click(System::Object^ sender, System::EventArgs^ e) {
 		userSettings->ShowLayersPanel = !userSettings->ShowLayersPanel;
 		SetLayersPanelVisibility(userSettings->ShowLayersPanel);
 	}
 	System::Void SetLayersPanelVisibility(bool value) {
 		if (value) {
-			if (!panelLayers->Visible) panelMain->Size = System::Drawing::Size(panelMain->Size.Width - panelLayers->Width, panelMain->Size.Height);
+			if (!panelLayers->Visible)
+			{
+				panelMain->Size = System::Drawing::Size(panelMain->Size.Width - panelLayers->Width, panelMain->Size.Height);
+				RecalculateRectangles();
+			}
 			panelLayers->Visible = true;
 			buttonAdd->Visible = true;
 			buttonDelete->Visible = true;
@@ -1208,7 +1145,11 @@ namespace paint {
 			buttonMoveDown->Visible = true;
 		}
 		else {
-			if (panelLayers->Visible) panelMain->Size = System::Drawing::Size(panelMain->Size.Width + panelLayers->Width, panelMain->Size.Height);
+			if (panelLayers->Visible)
+			{
+				panelMain->Size = System::Drawing::Size(panelMain->Size.Width + panelLayers->Width, panelMain->Size.Height);
+				RecalculateRectangles();
+			}
 			panelLayers->Visible = false;
 			buttonAdd->Visible = false;
 			buttonDelete->Visible = false;
@@ -1392,7 +1333,6 @@ namespace paint {
 		::Paint::IsSelectionActive = false;
 		pboxMain->Invalidate(::Paint::selectionRegion);
 	}
-
 	System::Void ChangeTool(Tool^ newTool) {
 		if (newTool == selectedTool) return;
 		if (selectedTool == transformTool) {
@@ -1401,6 +1341,60 @@ namespace paint {
 		selectedTool->button->Checked = false;
 		selectedTool = newTool;
 		selectedTool->button->Checked = true;
+	}
+	private: System::Void ScrollBarY_Scroll(System::Object^ sender, System::Windows::Forms::ScrollEventArgs^ e) {
+		::Paint::currentY = e->NewValue;
+		RecalculateRectangles();
+		pboxMain->Invalidate();
+	}
+	private: System::Void ScrollBarX_Scroll(System::Object^ sender, System::Windows::Forms::ScrollEventArgs^ e) {
+		::Paint::currentX = e->NewValue;
+		RecalculateRectangles();
+		pboxMain->Invalidate();
+	}
+
+	private: System::Void Panel_MouseWheel(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
+	{
+		// Check if the mouse pointer is over the PictureBox
+		if (this->pboxMain->ClientRectangle.Contains(this->pboxMain->PointToClient(Control::MousePosition)))
+		{
+			// Check if the Shift key is pressed
+			if ((Control::ModifierKeys & Keys::Control) == Keys::Control) {
+				//::Paint::scale = ::Paint::scale - Util::ScrollScale(::Paint::scale, -e->Delta, 0.01f);
+				float scaleFactor = (e->Delta > 0) ? 1.1f : 0.9f;
+
+				// Apply scaling
+				::Paint::scale *= scaleFactor;
+				if (::Paint::scale <= 0.1f) ::Paint::scale = 0.1f;
+				else if (::Paint::scale > 128.0f) ::Paint::scale = 128.0f;
+				UpdateScale();
+				RecalculateRectangles();
+			}
+			else if ((Control::ModifierKeys & Keys::Shift) == Keys::Shift)
+			{
+				// Scroll horizontally
+				int newHorizontalValue = ScrollBarX->Value - e->Delta * 0.1f;
+				ScrollBarX->Value = Math::Max(ScrollBarX->Minimum,
+					Math::Min(ScrollBarX->Maximum, newHorizontalValue));
+				::Paint::currentX = ScrollBarX->Value;
+				RecalculateRectangles();
+			}
+			else
+			{
+				// Scroll vertically
+				int newVerticalValue = ScrollBarY->Value - e->Delta * 0.1f;
+				ScrollBarY->Value = Math::Max(ScrollBarY->Minimum,
+					Math::Min(ScrollBarY->Maximum, newVerticalValue));
+				::Paint::currentY = ScrollBarY->Value;
+				RecalculateRectangles();
+			}
+
+			// Redraw the panel to reflect the scrolling
+			pboxMain->Invalidate();
+		}
+	}
+	private: System::Void Form1_SizeChanged(System::Object^ sender, System::EventArgs^ e) {
+		RecalculateRectangles();
 	}
 };
 }

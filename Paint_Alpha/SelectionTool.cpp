@@ -9,14 +9,14 @@ SelectionTool::SelectionTool()
 
 System::Void SelectionTool::DrawGizmo(System::Drawing::Graphics^ g, float scale)
 {
-    auto state = g->Save();
+    /*auto state = g->Save();
     g->ResetTransform();
     int x = System::Math::Min(pointStart.X, temporaryPoint.X);
     int y = System::Math::Min(pointStart.Y, temporaryPoint.Y);
     int width = System::Math::Abs(pointStart.X - temporaryPoint.X);
     int height = System::Math::Abs(pointStart.Y - temporaryPoint.Y);
     g->DrawRectangle(pen, x * scale, y * scale, width * scale, height * scale);
-    g->Restore(state);
+    g->Restore(state);*/
 }
 
 System::Void SelectionTool::DrawPreview(System::Drawing::Graphics^ g)
@@ -25,7 +25,7 @@ System::Void SelectionTool::DrawPreview(System::Drawing::Graphics^ g)
     int y = System::Math::Min(pointStart.Y, temporaryPoint.Y);
     int width = System::Math::Abs(pointStart.X - temporaryPoint.X);
     int height = System::Math::Abs(pointStart.Y - temporaryPoint.Y);
-    g->DrawRectangle(pen, x, y, width, height);
+    g->DrawRectangle(pen, (x - ::Paint::currentX) * ::Paint::scale, (y - ::Paint::currentY) * ::Paint::scale, width * ::Paint::scale, height * ::Paint::scale);
 }
 
 System::Void SelectionTool::OnMouseDown(System::Windows::Forms::MouseEventArgs^ e)

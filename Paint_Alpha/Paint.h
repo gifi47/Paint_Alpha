@@ -25,6 +25,9 @@ public:
 		}
 	}
 	static System::Drawing::Size canvasSize = System::Drawing::Size(512, 512);
+	static float scale = 1.0f;
+	static int currentX = 0;
+	static int currentY = 0;
 	static int thickness = 1;
 };
 
