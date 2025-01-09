@@ -18,6 +18,7 @@
 #include "PaintUserSettings.h"
 #include "FormSettings.h"
 #include "Util.h"
+#include "EllipseTool.h"
 
 namespace paint {
 
@@ -98,6 +99,8 @@ namespace paint {
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonTranslation;
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonSettings;
 	private: System::Windows::Forms::ToolStripButton^ toolStripButtonApplySelection;
+	private: System::Windows::Forms::ToolStripButton^ toolStripButtonEllipseTool;
+
 
 
 
@@ -143,6 +146,7 @@ namespace paint {
 			this->toolStripSeparator1 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->toolStripButtonSelection = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonTranslation = (gcnew System::Windows::Forms::ToolStripButton());
+			this->toolStripButtonApplySelection = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonPencilTool = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonBucketTool = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonRectangleTool = (gcnew System::Windows::Forms::ToolStripButton());
@@ -158,7 +162,7 @@ namespace paint {
 			this->toolStripTextBoxScale = (gcnew System::Windows::Forms::ToolStripTextBox());
 			this->toolStripButtonHideLayersTab = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripButtonSettings = (gcnew System::Windows::Forms::ToolStripButton());
-			this->toolStripButtonApplySelection = (gcnew System::Windows::Forms::ToolStripButton());
+			this->toolStripButtonEllipseTool = (gcnew System::Windows::Forms::ToolStripButton());
 			this->panelMain->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pboxMain))->BeginInit();
 			this->toolStrip1->SuspendLayout();
@@ -264,15 +268,15 @@ namespace paint {
 			// toolStrip1
 			// 
 			this->toolStrip1->ImageScalingSize = System::Drawing::Size(24, 24);
-			this->toolStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(29) {
+			this->toolStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(30) {
 				this->ToolStripButtonCreateNew,
 					this->toolStripButtonOpen, this->toolStripButtonSave, this->ïå÷àòüToolStripButton, this->ñïðàâêàToolStripButton, this->toolStripSeparator,
 					this->toolStripButtonResize, this->ToolStripButtonCut, this->ToolStripButtonCopy, this->ToolStripButtonPaste, this->toolStripSeparator1,
 					this->toolStripButtonSelection, this->toolStripButtonTranslation, this->toolStripButtonApplySelection, this->toolStripButtonPencilTool,
-					this->toolStripButtonBucketTool, this->toolStripButtonRectangleTool, this->toolStripButtonEraserTool, this->toolStripButtonText,
-					this->toolStripButton5, this->toolStripButtonColorPicker, this->toolStripSeparator2, this->toolStripButtonCurrentColor, this->toolStripTextBoxSize,
-					this->toolStripButtonMagnifyingGlassMinus, this->toolStripButtonMagnifyingGlassPlus, this->toolStripTextBoxScale, this->toolStripButtonHideLayersTab,
-					this->toolStripButtonSettings
+					this->toolStripButtonBucketTool, this->toolStripButtonEraserTool, this->toolStripButtonRectangleTool, this->toolStripButtonEllipseTool,
+					this->toolStripButtonText, this->toolStripButton5, this->toolStripButtonColorPicker, this->toolStripSeparator2, this->toolStripButtonCurrentColor,
+					this->toolStripTextBoxSize, this->toolStripButtonMagnifyingGlassMinus, this->toolStripButtonMagnifyingGlassPlus, this->toolStripTextBoxScale,
+					this->toolStripButtonHideLayersTab, this->toolStripButtonSettings
 			});
 			this->toolStrip1->Location = System::Drawing::Point(0, 0);
 			this->toolStrip1->Name = L"toolStrip1";
@@ -400,6 +404,17 @@ namespace paint {
 			this->toolStripButtonTranslation->Text = L"toolStripButton1";
 			this->toolStripButtonTranslation->ToolTipText = L"Ïåðåìåùåíèå";
 			this->toolStripButtonTranslation->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonTranslation_Click);
+			// 
+			// toolStripButtonApplySelection
+			// 
+			this->toolStripButtonApplySelection->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
+			this->toolStripButtonApplySelection->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButtonApplySelection.Image")));
+			this->toolStripButtonApplySelection->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->toolStripButtonApplySelection->Name = L"toolStripButtonApplySelection";
+			this->toolStripButtonApplySelection->Size = System::Drawing::Size(34, 28);
+			this->toolStripButtonApplySelection->Text = L"toolStripButtonApplySelection";
+			this->toolStripButtonApplySelection->ToolTipText = L"Ïðèìåíèòü è ñíÿòü âûäåëåíèå";
+			this->toolStripButtonApplySelection->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonApplySelection_Click);
 			// 
 			// toolStripButtonPencilTool
 			// 
@@ -558,16 +573,16 @@ namespace paint {
 			this->toolStripButtonSettings->ToolTipText = L"Íàñòðîéêè";
 			this->toolStripButtonSettings->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonSettings_Click);
 			// 
-			// toolStripButtonApplySelection
+			// toolStripButtonEllipseTool
 			// 
-			this->toolStripButtonApplySelection->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
-			this->toolStripButtonApplySelection->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButtonApplySelection.Image")));
-			this->toolStripButtonApplySelection->ImageTransparentColor = System::Drawing::Color::Magenta;
-			this->toolStripButtonApplySelection->Name = L"toolStripButtonApplySelection";
-			this->toolStripButtonApplySelection->Size = System::Drawing::Size(34, 28);
-			this->toolStripButtonApplySelection->Text = L"toolStripButtonApplySelection";
-			this->toolStripButtonApplySelection->ToolTipText = L"Ïðèìåíèòü è ñíÿòü âûäåëåíèå";
-			this->toolStripButtonApplySelection->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonApplySelection_Click);
+			this->toolStripButtonEllipseTool->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
+			this->toolStripButtonEllipseTool->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripButtonEllipseTool.Image")));
+			this->toolStripButtonEllipseTool->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->toolStripButtonEllipseTool->Name = L"toolStripButtonEllipseTool";
+			this->toolStripButtonEllipseTool->Size = System::Drawing::Size(34, 28);
+			this->toolStripButtonEllipseTool->Text = L"toolStripButton1";
+			this->toolStripButtonEllipseTool->ToolTipText = L"Ýëëèïñ";
+			this->toolStripButtonEllipseTool->Click += gcnew System::EventHandler(this, &Form1::toolStripButtonEllipseTool_Click);
 			// 
 			// Form1
 			// 
@@ -605,6 +620,7 @@ namespace paint {
 		Tool^ selectedTool;
 		PencilTool^ pencilTool;
 		RectangleTool^ rectangleTool;
+		EllipseTool^ ellipseTool;
 		ColorPickerTool^ colorPickerTool;
 		BucketTool^ bucketTool;
 		EraserTool^ eraserTool;
@@ -635,6 +651,8 @@ namespace paint {
 		pencilTool->button = toolStripButtonPencilTool;
 		rectangleTool = gcnew RectangleTool();
 		rectangleTool->button = toolStripButtonRectangleTool;
+		ellipseTool = gcnew EllipseTool();
+		ellipseTool->button = toolStripButtonEllipseTool;
 		colorPickerTool = gcnew ColorPickerTool();
 		colorPickerTool->button = toolStripButtonColorPicker;
 		colorPickerTool->colorSelector = toolStripButtonCurrentColor;
@@ -786,6 +804,10 @@ namespace paint {
 		}
 		if (transformTool->IsActive) {
 			transformTool->DrawPreview(e->Graphics);
+		}
+		if (selectedTool == eraserTool) {
+			System::Drawing::Point p = this->pboxMain->PointToClient(Control::MousePosition);
+			eraserTool->DrawGizmo(e->Graphics, scale, p.X, p.Y);
 		}
 		layersController->DrawTopLayers(e->Graphics);
 
@@ -1379,6 +1401,9 @@ namespace paint {
 		selectedTool->button->Checked = false;
 		selectedTool = newTool;
 		selectedTool->button->Checked = true;
+	}
+	private: System::Void toolStripButtonEllipseTool_Click(System::Object^ sender, System::EventArgs^ e) {
+		ChangeTool(ellipseTool);
 	}
 };
 }

@@ -1,19 +1,19 @@
 #pragma once
 #include "Tool.h"
-ref class EraserTool :
+ref class EllipseTool :
     public Tool
 {
 private:
-    System::Drawing::Brush^ brush;
+    System::Drawing::Pen^ pen;
+    System::Drawing::Point pointStart;
+    System::Drawing::Point temporaryPoint;
 
 public:
-    EraserTool();
-    System::Void DrawGizmo(System::Drawing::Graphics^ g, float scale, int x, int y);
-
+    EllipseTool();
     // Унаследовано через Tool
-    System::Void DrawPreview(System::Drawing::Graphics^ g) override;
     System::Void OnMouseDown(System::Windows::Forms::MouseEventArgs^ e) override;
     System::Void OnMouseUp(System::Windows::Forms::MouseEventArgs^ e) override;
     System::Drawing::Rectangle OnMouseMove(System::Windows::Forms::MouseEventArgs^ e) override;
+    System::Void DrawPreview(System::Drawing::Graphics^ g) override;
 };
 

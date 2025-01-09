@@ -6,6 +6,15 @@ EraserTool::EraserTool()
     brush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromArgb(0, 0, 0, 0));
 }
 
+System::Void EraserTool::DrawGizmo(System::Drawing::Graphics^ g, float scale, int x, int y)
+{
+    auto state = g->Save();
+    g->CompositingMode = System::Drawing::Drawing2D::CompositingMode::SourceCopy;
+    System::Drawing::Rectangle rect(x - ::Paint::thickness, y - ::Paint::thickness, ::Paint::thickness * 3, ::Paint::thickness * 3);
+    g->FillRectangle(brush, rect);
+    g->Restore(state);
+}
+
 System::Void EraserTool::DrawPreview(System::Drawing::Graphics^ g)
 {
     return System::Void();

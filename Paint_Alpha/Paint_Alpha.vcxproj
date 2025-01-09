@@ -115,6 +115,7 @@
     <ClCompile Include="BucketTool.cpp" />
     <ClCompile Include="ColorController.cpp" />
     <ClCompile Include="ColorPickerTool.cpp" />
+    <ClCompile Include="EllipseTool.cpp" />
     <ClCompile Include="EraserTool.cpp" />
     <ClCompile Include="Form1.cpp" />
     <ClCompile Include="FormCreateNew.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="BucketTool.h" />
     <ClInclude Include="ColorController.h" />
     <ClInclude Include="ColorPickerTool.h" />
+    <ClInclude Include="EllipseTool.h" />
     <ClInclude Include="EraserTool.h" />
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
